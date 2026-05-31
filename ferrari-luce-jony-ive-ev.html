@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Economist · Ferrari Luce: Jony Ive EV</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root {
+    --paper: #fbf8f1;
+    --paper-2: #f3eee2;
+    --ink: #1a1614;
+    --ink-2: #3a342f;
+    --ink-3: #6b6359;
+    --ink-4: #9a9286;
+    --rule: #e6dfcf;
+    --rule-2: #d8cfba;
+    --economist-red: #e3120b;
+    --economist-red-deep: #b30c06;
+    --accent: #b8860b;
+    --highlight-cn: #fff2b8;
+    --highlight-cn-ink: #6b4f0a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', 'Noto Sans SC', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(0,0,0,0.018) 1px, transparent 0);
+    background-size: 4px 4px;
+    opacity: 0.6;
+  }
+
+  body > * { position: relative; z-index: 1; }
+
+  .serif-display { font-family: 'Playfair Display', 'Source Serif 4', Georgia, serif; }
+  .serif-body { font-family: 'Source Serif 4', Georgia, serif; }
+  .sans { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
+  .cn { font-family: 'Noto Sans SC', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+
+  .smallcaps {
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    font-size: 0.72rem;
+    color: var(--ink-3);
+  }
+
+  .masthead {
+    background: rgba(251, 248, 241, 0.85);
+    backdrop-filter: saturate(140%) blur(14px);
+    -webkit-backdrop-filter: saturate(140%) blur(14px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .brand-mark {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    background: var(--economist-red);
+    color: #fff;
+    padding: 4px 14px 6px;
+    line-height: 1;
+    border-radius: 2px;
+  }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--economist-red);
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    background: transparent;
+  }
+
+  .meta-line {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+
+  .theme-toggle {
+    display: inline-flex; align-items: center;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .theme-btn {
+    padding: 6px 14px;
+    border: none; border-radius: 999px;
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    font-size: 12px; font-weight: 500;
+    cursor: pointer;
+    background: transparent;
+    color: var(--ink-3);
+    transition: all .35s cubic-bezier(.23,1,.32,1);
+    white-space: nowrap;
+  }
+  .theme-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+    box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  }
+
+  .kicker {
+    display: inline-flex; align-items: baseline; gap: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--economist-red);
+  }
+  .kicker .kicker-rule {
+    width: 36px; height: 2px; background: var(--economist-red);
+    display: inline-block;
+  }
+
+  h1.hero-en {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: clamp(2.6rem, 5.6vw, 4.6rem);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  h1.hero-en em { font-style: italic; font-weight: 700; color: var(--economist-red-deep); }
+
+  h2.hero-cn {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    color: var(--ink-2);
+    margin-top: 18px;
+  }
+
+  .standfirst {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.65;
+    color: var(--ink-2);
+    max-width: 38em;
+    margin-top: 22px;
+  }
+
+  .byline {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    display: flex; align-items: center; gap: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+  .byline .dot { width: 4px; height: 4px; background: var(--ink-4); border-radius: 999px; }
+
+  .article-text {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.18rem;
+    line-height: 1.78;
+    color: var(--ink);
+    letter-spacing: 0.005em;
+  }
+
+  .article-block:first-of-type .article-text::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: 4.6em;
+    float: left;
+    line-height: 0.85;
+    margin: 0.08em 0.12em 0 -0.04em;
+    color: var(--economist-red-deep);
+  }
+
+  .chinese {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 400;
+    color: var(--ink-2);
+    font-size: 1.02rem;
+    line-height: 1.95;
+    margin-top: 1.1rem;
+    padding-top: 1.1rem;
+    border-top: 1px dashed var(--rule);
+    letter-spacing: 0.01em;
+  }
+
+  .vocab-highlight {
+    background: linear-gradient(180deg, transparent 62%, rgba(227, 18, 11, 0.16) 62%);
+    padding: 0 2px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 1px solid rgba(227, 18, 11, 0.45);
+    transition: all .2s ease;
+  }
+  .vocab-highlight:hover {
+    background: linear-gradient(180deg, transparent 0%, rgba(227, 18, 11, 0.18) 0%);
+    color: var(--economist-red-deep);
+  }
+
+  .chinese-highlight {
+    background: linear-gradient(180deg, transparent 62%, var(--highlight-cn) 62%);
+    color: var(--highlight-cn-ink);
+    padding: 0 2px;
+    font-weight: 500;
+  }
+
+  .section-divider {
+    display: flex; align-items: center; gap: 18px;
+    margin: 80px 0 40px;
+    color: var(--ink-3);
+  }
+  .section-divider::before,
+  .section-divider::after {
+    content: ""; flex: 1; height: 1px; background: var(--rule);
+  }
+  .section-divider .ornament {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .vocab-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  }
+
+  .vocab-row {
+    display: grid;
+    grid-template-columns: minmax(180px, 220px) 1fr auto;
+    gap: 28px;
+    align-items: start;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .vocab-row:last-child { border-bottom: 0; }
+
+  .vocab-word {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .vocab-phonetic {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.78rem;
+    color: var(--ink-3);
+    margin-top: 4px;
+    letter-spacing: 0;
+  }
+  .vocab-meaning {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .vocab-example {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    color: var(--ink-3);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-top: 6px;
+    padding-left: 12px;
+    border-left: 2px solid var(--rule-2);
+  }
+
+  .icon-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: 999px;
+    color: var(--ink-3);
+    background: transparent;
+    border: 1px solid var(--rule);
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .icon-btn:hover { color: var(--economist-red); border-color: var(--economist-red); background: rgba(227,18,11,0.04); }
+  .icon-btn.danger:hover { color: #b30c06; border-color: #b30c06; }
+
+  .input-field {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--rule-2);
+    border-radius: 4px;
+    padding: 12px 16px;
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s ease;
+  }
+  .input-field:focus { border-color: var(--ink); }
+  .input-field::placeholder { color: var(--ink-4); }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 12px 22px;
+    border-radius: 4px;
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: all .2s ease;
+  }
+  .btn-primary:hover { background: var(--economist-red); }
+  .btn-primary:active { transform: translateY(1px); }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+
+  .translation-tooltip {
+    position: absolute;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    z-index: 100;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .translation-tooltip::after {
+    content: ""; position: absolute;
+    bottom: -5px; left: 16px;
+    width: 10px; height: 10px;
+    background: var(--ink);
+    transform: rotate(45deg);
+  }
+
+  .article-footer {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 2px solid var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .article-footer .red-rule {
+    width: 60px; height: 4px;
+    background: var(--economist-red);
+    margin-bottom: 18px;
+  }
+
+  /* PREMIUM (高端质感) — Dark theme */
+  body.premium {
+    background: #0e0d0c;
+    color: #e8e1d1;
+  }
+  body.premium::before {
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.025) 1px, transparent 0);
+    opacity: 0.5;
+  }
+
+  body.premium .masthead {
+    background: rgba(14, 13, 12, 0.88);
+    border-bottom-color: rgba(201, 168, 76, 0.18);
+  }
+  body.premium .brand-mark {
+    background: linear-gradient(135deg, #d4b568, #9a7b30);
+    color: #0e0d0c;
+  }
+  body.premium .pill {
+    color: #d4b568;
+    border-color: rgba(212, 181, 104, 0.5);
+  }
+  body.premium .meta-line { color: #8a8170; }
+
+  body.premium .theme-toggle {
+    background: #1a1815;
+    border-color: rgba(201, 168, 76, 0.18);
+  }
+  body.premium .theme-btn { color: #8a8170; }
+  body.premium .theme-btn.active {
+    background: linear-gradient(135deg, #d4b568, #9a7b30);
+    color: #0e0d0c;
+    box-shadow: 0 2px 12px rgba(212, 181, 104, 0.25);
+  }
+
+  body.premium .kicker { color: #d4b568; }
+  body.premium .kicker .kicker-rule { background: #d4b568; }
+
+  body.premium h1.hero-en { color: #f4ecd8; }
+  body.premium h1.hero-en em { color: #d4b568; }
+  body.premium h2.hero-cn { color: #b8b0a0; }
+  body.premium .standfirst { color: #b8b0a0; }
+  body.premium .byline {
+    color: #8a8170;
+    border-top-color: rgba(201, 168, 76, 0.18);
+  }
+  body.premium .byline .dot { background: #6a6358; }
+
+  body.premium .article-text { color: #d8cfb8; }
+  body.premium .article-block:first-of-type .article-text::first-letter { color: #d4b568; }
+  body.premium .chinese {
+    color: #9a9282;
+    border-top-color: rgba(201, 168, 76, 0.14);
+  }
+
+  body.premium .vocab-highlight {
+    background: linear-gradient(180deg, transparent 62%, rgba(212, 181, 104, 0.18) 62%);
+    color: #f4ecd8;
+    border-bottom-color: rgba(212, 181, 104, 0.6);
+  }
+  body.premium .vocab-highlight:hover {
+    background: linear-gradient(180deg, transparent 0%, rgba(212, 181, 104, 0.22) 0%);
+    color: #d4b568;
+  }
+  body.premium .chinese-highlight {
+    background: linear-gradient(180deg, transparent 62%, rgba(212, 181, 104, 0.18) 62%);
+    color: #d4b568;
+  }
+
+  body.premium .section-divider { color: #8a8170; }
+  body.premium .section-divider::before,
+  body.premium .section-divider::after { background: rgba(201, 168, 76, 0.18); }
+  body.premium .section-divider .ornament { color: #8a8170; }
+
+  body.premium .smallcaps { color: #8a8170; }
+
+  body.premium .vocab-card {
+    background: #16140f;
+    border-color: rgba(201, 168, 76, 0.18);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  }
+  body.premium .vocab-row { border-bottom-color: rgba(201, 168, 76, 0.12); }
+  body.premium .vocab-word { color: #f4ecd8; }
+  body.premium .vocab-phonetic { color: #8a8170; }
+  body.premium .vocab-meaning { color: #d8cfb8; }
+  body.premium .vocab-example {
+    color: #8a8170;
+    border-left-color: rgba(201, 168, 76, 0.25);
+  }
+
+  body.premium .icon-btn {
+    color: #8a8170;
+    border-color: rgba(201, 168, 76, 0.22);
+  }
+  body.premium .icon-btn:hover {
+    color: #d4b568;
+    border-color: #d4b568;
+    background: rgba(212, 181, 104, 0.08);
+  }
+
+  body.premium .input-field {
+    background: #1a1814;
+    border-color: rgba(201, 168, 76, 0.22);
+    color: #e8e1d1;
+  }
+  body.premium .input-field:focus { border-color: #d4b568; }
+  body.premium .input-field::placeholder { color: #6a6358; }
+
+  body.premium .btn-primary {
+    background: linear-gradient(135deg, #d4b568, #9a7b30);
+    color: #0e0d0c;
+  }
+  body.premium .btn-primary:hover { filter: brightness(1.08); }
+
+  body.premium .stat-num { color: #f4ecd8; }
+
+  body.premium .translation-tooltip {
+    background: linear-gradient(135deg, #d4b568, #9a7b30);
+    color: #0e0d0c;
+  }
+  body.premium .translation-tooltip::after { background: #b89549; }
+
+  body.premium .article-footer {
+    border-top-color: #d4b568;
+    color: #8a8170;
+  }
+  body.premium .article-footer .red-rule { background: #d4b568; }
+
+  body, .masthead, .vocab-card, h1, h2, p, span, input, button, div, .icon-btn {
+    transition: background-color .4s ease, color .4s ease,
+                border-color .4s ease, box-shadow .4s ease;
+  }
+
+  @media (max-width: 768px) {
+    .vocab-row { grid-template-columns: 1fr auto; }
+    .vocab-row > .vocab-meta { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead sticky top-0 z-50">
+  <div class="max-w-5xl mx-auto px-8 py-5 flex items-center justify-between gap-6">
+    <div class="flex items-center gap-4">
+      <span class="brand-mark text-xl">The Economist</span>
+      <span class="pill"><i class="fa-solid fa-book-open-reader text-[10px]"></i> Learning Edition</span>
+    </div>
+    <div class="flex items-center gap-5">
+      <div class="theme-toggle cn">
+        <button class="theme-btn active" data-theme="clean" onclick="switchTheme('clean')">简洁</button>
+        <button class="theme-btn" data-theme="premium" onclick="switchTheme('premium')">高端质感</button>
+      </div>
+      <span class="meta-line hidden md:inline">VOL. CCCXVI · APRIL 2025</span>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-8 pt-16 pb-24">
+
+  <section class="max-w-3xl">
+    <div class="kicker"><span class="kicker-rule"></span> The Quiet Revolution · 静默革命</div>
+
+    <h1 class="hero-en mt-6">
+      The Quiet Power of <em>Deep Work</em><br>
+      in the Age of <em>AI</em>
+    </h1>
+
+    <h2 class="hero-cn cn">人工智能时代下深度工作的静默力量</h2>
+
+    <p class="standfirst">
+      In a world of constant distraction, the ability to focus may become the ultimate competitive advantage.
+    </p>
+
+    <div class="byline">
+      <span class="smallcaps">Briefing</span>
+      <span class="dot"></span>
+      <span>By the Editorial Board</span>
+      <span class="dot"></span>
+      <span>April 2025 · 6 min read</span>
+    </div>
+  </section>
+
+  <article class="mt-16 max-w-3xl space-y-12">
+
+    <div class="article-block">
+      <p class="article-text">
+        In an age dominated by artificial intelligence and endless notifications, the capacity for
+        <span class="vocab-highlight" data-word="uninterrupted">deep, uninterrupted</span> work has become increasingly rare—and therefore increasingly valuable.
+        While many fear that AI will replace human labour, a more <span class="vocab-highlight" data-word="subtle">subtle</span> threat is emerging: the
+        <span class="vocab-highlight" data-word="erosion">erosion</span> of our ability to think deeply.
+      </p>
+      <p class="chinese cn">
+        在人工智能与无尽通知主导的时代，进行<span class="chinese-highlight">深度、无干扰</span>工作的能力变得越来越稀缺，因此也越来越有价值。虽然许多人担心人工智能会取代人类劳动，但一种更<span class="chinese-highlight">微妙</span>的威胁正在浮现：我们深度思考能力的<span class="chinese-highlight">逐渐侵蚀</span>。
+      </p>
+    </div>
+
+    <div class="article-block">
+      <p class="article-text">
+        The concept of &ldquo;<span class="vocab-highlight" data-word="deep work">deep work</span>&rdquo;, popularised by computer scientist Cal Newport, refers to the ability to focus without distraction on
+        <span class="vocab-highlight" data-word="cognitively">cognitively</span> demanding tasks. This skill is not merely about productivity; it is about creating work that is meaningful, original and difficult to
+        <span class="vocab-highlight" data-word="replicate">replicate</span>. In contrast, &ldquo;<span class="vocab-highlight" data-word="shallow work">shallow work</span>&rdquo;—answering emails, attending back-to-back meetings, scrolling through updates—can be performed while
+        <span class="vocab-highlight" data-word="distracted">distracted</span> and is increasingly being automated.
+      </p>
+      <p class="chinese cn">
+        由计算机科学家 Cal Newport 提出的<span class="chinese-highlight">深度工作</span>概念，指的是在无干扰状态下专注于<span class="chinese-highlight">认知要求高</span>的任务的能力。这种技能不仅关乎生产力，更关乎创造有意义、原创且难以<span class="chinese-highlight">复制</span>的工作。相比之下，<span class="chinese-highlight">浅层工作</span>——回复邮件、参加连续会议、刷新动态——可以在<span class="chinese-highlight">分心</span>状态下完成，并且正越来越多地被自动化。
+      </p>
+    </div>
+
+    <div class="article-block">
+      <p class="article-text">
+        Research suggests that the human brain is not wired for <span class="vocab-highlight" data-word="sustained">sustained</span> attention. Every time we switch tasks, we incur a &ldquo;<span class="vocab-highlight" data-word="switch cost">switch cost</span>&rdquo; in both time and cognitive energy. Over time, this constant
+        <span class="vocab-highlight" data-word="fragmentation">fragmentation</span> weakens our ability to engage in the kind of complex, creative thinking that AI cannot easily replicate. The
+        <span class="vocab-highlight" data-word="irony">irony</span> is that as AI becomes more powerful, the value of human deep work rises.
+      </p>
+      <p class="chinese cn">
+        研究表明，人脑并不为<span class="chinese-highlight">持续</span>注意力而生。每当我们切换任务，都会在时间与认知能量上产生<span class="chinese-highlight">切换成本</span>。随着时间推移，这种持续的<span class="chinese-highlight">碎片化</span>会削弱我们进行复杂、创造性思考的能力，而这正是人工智能难以轻易复制的。<span class="chinese-highlight">讽刺</span>的是，随着人工智能日益强大，人类深度工作的价值反而上升。
+      </p>
+    </div>
+
+  </article>
+
+  <section class="mt-20 max-w-3xl">
+    <div class="section-divider"><span class="ornament">Core Vocabulary</span></div>
+
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <div class="smallcaps">Words to Master</div>
+        <div class="flex items-baseline gap-3 mt-2">
+          <span id="vocab-count" class="stat-num">12</span>
+          <span class="cn text-base" style="color:var(--ink-3)">个核心词汇</span>
+        </div>
+      </div>
+      <div class="meta-line hidden sm:block">点击文中高亮词查看释义 · Click highlighted words</div>
+    </div>
+
+    <div class="vocab-card p-8">
+      <div class="flex gap-3 mb-8">
+        <input id="new-word-input" type="text" placeholder="输入新单词 / Add a new word…" class="input-field cn" onkeydown="if(event.key==='Enter') addNewWord()">
+        <button onclick="addNewWord()" class="btn-primary cn">
+          <i class="fa-solid fa-plus mr-1.5"></i> 添加到词汇表
+        </button>
+      </div>
+
+      <div id="vocab-container"></div>
+    </div>
+  </section>
+
+  <footer class="article-footer max-w-3xl">
+    <div class="red-rule"></div>
+    <div class="flex flex-wrap justify-between gap-4">
+      <div>© The Economist Newspaper Limited · Learning Edition</div>
+      <div>Typeset in <span class="serif-display italic" style="font-size:14px">Playfair Display</span> &amp; Source Serif</div>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  let vocabularyData = [
+    { word: "erosion", phonetic: "/ɪˈrəʊʒn/", meaning: "侵蚀，逐渐削弱", example: "The erosion of deep work ability is a silent crisis." },
+    { word: "fragmentation", phonetic: "/ˌfræɡmənˈteɪʃn/", meaning: "碎片化", example: "Constant fragmentation weakens deep thinking." },
+    { word: "cognitively", phonetic: "/ˈkɒɡnətɪvli/", meaning: "认知上地", example: "Deep work requires cognitively demanding focus." },
+    { word: "replicate", phonetic: "/ˈreplɪkeɪt/", meaning: "复制，模仿", example: "AI struggles to replicate truly original work." },
+    { word: "sustained", phonetic: "/səˈsteɪnd/", meaning: "持续的", example: "Sustained attention is becoming rare." },
+    { word: "irony", phonetic: "/ˈaɪrəni/", meaning: "讽刺", example: "The irony is that AI increases the value of human focus." },
+    { word: "subtle", phonetic: "/ˈsʌtl/", meaning: "微妙的", example: "A more subtle threat is emerging." },
+    { word: "distracted", phonetic: "/dɪˈstræktɪd/", meaning: "分心的", example: "Shallow work can be done while distracted." },
+    { word: "uninterrupted", phonetic: "/ˌʌnɪntəˈrʌptɪd/", meaning: "不间断的", example: "Deep work requires long periods of uninterrupted focus." },
+    { word: "competitive advantage", phonetic: "/kəmˈpetətɪv ədˈvɑːntɪdʒ/", meaning: "竞争优势", example: "Deep work may become the ultimate competitive advantage." },
+    { word: "switch cost", phonetic: "/swɪtʃ kɒst/", meaning: "切换成本", example: "Every task switch comes with a cognitive switch cost." },
+    { word: "shallow work", phonetic: "/ˈʃæləʊ wɜːk/", meaning: "浅层工作", example: "Shallow work is easy to automate but hard to build a career on." }
+  ];
+
+  function speak(text) {
+    if ('speechSynthesis' in window) {
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US'; u.rate = 0.92;
+      speechSynthesis.cancel();
+      speechSynthesis.speak(u);
+    }
+  }
+
+  function deleteVocabulary(word) {
+    vocabularyData = vocabularyData.filter(item => item.word !== word);
+    renderVocabulary();
+    document.querySelectorAll('.vocab-highlight').forEach(span => {
+      if (span.dataset.word === word) {
+        const t = document.createTextNode(span.textContent);
+        span.parentNode.replaceChild(t, span);
+      }
+    });
+  }
+
+  function addNewWord() {
+    const input = document.getElementById('new-word-input');
+    const word = input.value.trim();
+    if (!word) return;
+    if (vocabularyData.some(i => i.word.toLowerCase() === word.toLowerCase())) {
+      input.style.borderColor = 'var(--economist-red)';
+      input.placeholder = '该单词已存在 / Already in list';
+      input.value = '';
+      setTimeout(() => { input.style.borderColor = ''; input.placeholder = '输入新单词 / Add a new word…'; }, 1800);
+      return;
+    }
+    vocabularyData.push({ word, phonetic: '/.../', meaning: '（请补充中文释义）', example: '（请补充例句）' });
+    renderVocabulary();
+    input.value = '';
+    highlightWordInArticle(word);
+  }
+
+  function highlightWordInArticle(word) {
+    document.querySelectorAll('.article-text').forEach(p => {
+      const re = new RegExp(`\\b(${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})\\b`, 'gi');
+      p.innerHTML = p.innerHTML.replace(re, `<span class="vocab-highlight" data-word="${word}">$1</span>`);
+    });
+    makeHighlightsClickable();
+  }
+
+  function showTranslation(word, element) {
+    const item = vocabularyData.find(v => v.word === word);
+    if (!item) return;
+
+    document.querySelectorAll('.translation-tooltip').forEach(t => t.remove());
+
+    const tip = document.createElement('div');
+    tip.className = 'translation-tooltip cn';
+    tip.textContent = item.meaning;
+    document.body.appendChild(tip);
+
+    const r = element.getBoundingClientRect();
+    tip.style.top = (window.scrollY + r.top - tip.offsetHeight - 12) + 'px';
+    tip.style.left = (window.scrollX + r.left) + 'px';
+
+    setTimeout(() => {
+      tip.style.transition = 'opacity .25s ease';
+      tip.style.opacity = '0';
+      setTimeout(() => tip.remove(), 260);
+    }, 2400);
+  }
+
+  function renderVocabulary() {
+    const c = document.getElementById('vocab-container');
+    c.innerHTML = '';
+    document.getElementById('vocab-count').textContent = vocabularyData.length;
+
+    vocabularyData.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'vocab-row';
+      row.dataset.word = item.word;
+      row.innerHTML = `
+        <div>
+          <div class="vocab-word">${item.word}</div>
+          <div class="vocab-phonetic">${item.phonetic}</div>
+        </div>
+        <div class="vocab-meta">
+          <div class="vocab-meaning cn">${item.meaning}</div>
+          <div class="vocab-example">&ldquo;${item.example}&rdquo;</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="icon-btn" title="朗读 / Listen" onclick="speak('${item.word.replace(/'/g, "\\'")}')">
+            <i class="fa-solid fa-volume-high text-xs"></i>
+          </button>
+          <button class="icon-btn danger" title="删除 / Remove" onclick="deleteVocabulary('${item.word.replace(/'/g, "\\'")}')">
+            <i class="fa-solid fa-xmark text-xs"></i>
+          </button>
+        </div>
+      `;
+      c.appendChild(row);
+    });
+  }
+
+  function makeHighlightsClickable() {
+    document.querySelectorAll('.vocab-highlight').forEach(span => {
+      span.onclick = () => showTranslation(span.dataset.word, span);
+    });
+  }
+
+  function switchTheme(theme) {
+    document.body.classList.toggle('premium', theme === 'premium');
+    document.querySelectorAll('.theme-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.theme === theme);
+    });
+    try { localStorage.setItem('economist-theme', theme); } catch(e) {}
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    renderVocabulary();
+    makeHighlightsClickable();
+    try {
+      const saved = localStorage.getItem('economist-theme');
+      if (saved) switchTheme(saved);
+    } catch(e) {}
+  });
+</script>
+</body>
+</html>
