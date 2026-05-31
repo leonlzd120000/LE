@@ -371,6 +371,18 @@
     white-space: nowrap;
     pointer-events: none;
   }
+  .translation-tooltip .tooltip-phonetic {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    opacity: 0.72;
+    margin-bottom: 3px;
+  }
+  .translation-tooltip .tooltip-meaning {
+    font-size: 13px;
+    font-weight: 600;
+  }
   .translation-tooltip::after {
     content: ""; position: absolute;
     bottom: -5px; left: 16px;
@@ -834,7 +846,10 @@
 
     const tip = document.createElement('div');
     tip.className = 'translation-tooltip cn';
-    tip.textContent = item.meaning;
+    tip.innerHTML = `
+      <div class="tooltip-phonetic">${item.phonetic || ''}</div>
+      <div class="tooltip-meaning">${item.meaning}</div>
+    `;
     document.body.appendChild(tip);
 
     const r = element.getBoundingClientRect();
