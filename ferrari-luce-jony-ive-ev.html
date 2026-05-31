@@ -779,27 +779,40 @@
 
 <script>
   let vocabularyData = [
-    { word: "aspirational", phonetic: "/ˌæspəˈreɪʃənl/", meaning: "令人向往的", example: "Ferrari's cars were aspirational even to people who could not afford them." },
-    { word: "derision", phonetic: "/dɪˈrɪʒn/", meaning: "嘲讽，嘲笑", example: "The launch drew derision across the internet." },
-    { word: "homogenize", phonetic: "/həˈmɑːdʒənaɪz/", meaning: "使同质化", example: "Critics said the Luce homogenized Ferrari's visual identity." },
-    { word: "brand identity", phonetic: "/brænd aɪˈdentəti/", meaning: "品牌身份", example: "Brand identity and design expectations are tightly linked." },
-    { word: "aerodynamic", phonetic: "/ˌeroʊdaɪˈnæmɪk/", meaning: "空气动力学的", example: "The Luce adopts a sweeping aerodynamic profile." },
-    { word: "stance", phonetic: "/stæns/", meaning: "车身姿态；立场", example: "The stance and proportions felt wrong for Ferrari." },
-    { word: "backlash", phonetic: "/ˈbæklæʃ/", meaning: "强烈反弹", example: "The design triggered immediate backlash." },
-    { word: "prancing horse", phonetic: "/ˈprænsɪŋ hɔːrs/", meaning: "跃马标志", example: "The prancing horse is central to Ferrari identity." },
-    { word: "vacant of identity", phonetic: "/ˈveɪkənt əv aɪˈdentəti/", meaning: "缺乏身份感", example: "The car looked almost vacant of identity." },
-    { word: "lithe", phonetic: "/laɪð/", meaning: "轻盈灵活的", example: "Ferrari is known for lithe, aggressive lines." },
-    { word: "ultraluxury", phonetic: "/ˌʌltrəˈlʌkʃəri/", meaning: "超豪华", example: "Chinese brands are launching ultraluxury EVs at volume." },
-    { word: "leapfrog moment", phonetic: "/ˈliːpfrɔːɡ ˈmoʊmənt/", meaning: "跨越式时刻", example: "Ferrari's CEO called the EV a leapfrog moment." }
+    { word: "aspirational", phonetic: "/ˌæspəˈreɪʃənl/", meaning: "令人向往的", example: "Ferrari's cars were aspirational even to people who could not afford them.", audio: "audio/ferrari-luce-jony-ive-ev/aspirational.mp3" },
+    { word: "derision", phonetic: "/dɪˈrɪʒn/", meaning: "嘲讽，嘲笑", example: "The launch drew derision across the internet.", audio: "audio/ferrari-luce-jony-ive-ev/derision.mp3" },
+    { word: "homogenize", phonetic: "/həˈmɑːdʒənaɪz/", meaning: "使同质化", example: "Critics said the Luce homogenized Ferrari's visual identity.", audio: "audio/ferrari-luce-jony-ive-ev/homogenize.mp3" },
+    { word: "brand identity", phonetic: "/brænd aɪˈdentəti/", meaning: "品牌身份", example: "Brand identity and design expectations are tightly linked.", audio: "audio/ferrari-luce-jony-ive-ev/brand-identity.mp3" },
+    { word: "aerodynamic", phonetic: "/ˌeroʊdaɪˈnæmɪk/", meaning: "空气动力学的", example: "The Luce adopts a sweeping aerodynamic profile.", audio: "audio/ferrari-luce-jony-ive-ev/aerodynamic.mp3" },
+    { word: "stance", phonetic: "/stæns/", meaning: "车身姿态；立场", example: "The stance and proportions felt wrong for Ferrari.", audio: "audio/ferrari-luce-jony-ive-ev/stance.mp3" },
+    { word: "backlash", phonetic: "/ˈbæklæʃ/", meaning: "强烈反弹", example: "The design triggered immediate backlash.", audio: "audio/ferrari-luce-jony-ive-ev/backlash.mp3" },
+    { word: "prancing horse", phonetic: "/ˈprænsɪŋ hɔːrs/", meaning: "跃马标志", example: "The prancing horse is central to Ferrari identity.", audio: "audio/ferrari-luce-jony-ive-ev/prancing-horse.mp3" },
+    { word: "vacant of identity", phonetic: "/ˈveɪkənt əv aɪˈdentəti/", meaning: "缺乏身份感", example: "The car looked almost vacant of identity.", audio: "audio/ferrari-luce-jony-ive-ev/vacant-of-identity.mp3" },
+    { word: "lithe", phonetic: "/laɪð/", meaning: "轻盈灵活的", example: "Ferrari is known for lithe, aggressive lines.", audio: "audio/ferrari-luce-jony-ive-ev/lithe.mp3" },
+    { word: "ultraluxury", phonetic: "/ˌʌltrəˈlʌkʃəri/", meaning: "超豪华", example: "Chinese brands are launching ultraluxury EVs at volume.", audio: "audio/ferrari-luce-jony-ive-ev/ultraluxury.mp3" },
+    { word: "leapfrog moment", phonetic: "/ˈliːpfrɔːɡ ˈmoʊmənt/", meaning: "跨越式时刻", example: "Ferrari's CEO called the EV a leapfrog moment.", audio: "audio/ferrari-luce-jony-ive-ev/leapfrog-moment.mp3" }
   ];
 
-  function speak(text) {
-    if ('speechSynthesis' in window) {
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'en-US'; u.rate = 0.92;
-      speechSynthesis.cancel();
-      speechSynthesis.speak(u);
+  let activeAudio = null;
+
+  function speak(item, button) {
+    if (!item || !item.audio) return;
+    if (activeAudio) {
+      activeAudio.pause();
+      activeAudio.currentTime = 0;
     }
+    const original = button ? button.innerHTML : '';
+    const audio = new Audio(item.audio);
+    activeAudio = audio;
+    if (button) button.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xs"></i>';
+    audio.onended = audio.onerror = () => {
+      if (button) button.innerHTML = original;
+      if (activeAudio === audio) activeAudio = null;
+    };
+    audio.play().catch(() => {
+      if (button) button.innerHTML = original;
+      if (activeAudio === audio) activeAudio = null;
+    });
   }
 
   function deleteVocabulary(word) {
@@ -882,7 +895,7 @@
           <div class="vocab-example">&ldquo;${item.example}&rdquo;</div>
         </div>
         <div class="flex items-center gap-2">
-          <button class="icon-btn" title="朗读 / Listen" onclick="speak('${item.word.replace(/'/g, "\\'")}')">
+          <button class="icon-btn" title="Edge TTS 朗读 / Listen" onclick="speak(vocabularyData.find(v => v.word === '${item.word.replace(/'/g, "\\'")}'), this)">
             <i class="fa-solid fa-volume-high text-xs"></i>
           </button>
           <button class="icon-btn danger" title="删除 / Remove" onclick="deleteVocabulary('${item.word.replace(/'/g, "\\'")}')">
