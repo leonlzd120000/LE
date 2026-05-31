@@ -450,6 +450,31 @@
     transform: rotate(45deg);
   }
 
+  .selection-vocab-popover {
+    position: absolute;
+    z-index: 120;
+    display: none;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.72rem;
+    border: 1px solid rgba(227, 18, 11, 0.24);
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.18);
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: transform .18s ease, background .18s ease;
+  }
+  .selection-vocab-popover:hover {
+    background: var(--economist-red);
+    transform: translateY(-1px);
+  }
+  .selection-vocab-popover.is-visible { display: inline-flex; }
+
   .article-footer {
     margin-top: 80px;
     padding-top: 32px;
@@ -586,6 +611,12 @@
     color: #0e0d0c;
   }
   body.premium .translation-tooltip::after { background: #b89549; }
+
+  body.premium .selection-vocab-popover {
+    background: linear-gradient(135deg, #d4b568, #9a7b30);
+    color: #0e0d0c;
+    border-color: rgba(212, 181, 104, 0.38);
+  }
 
   body.premium .article-footer {
     border-top-color: #d4b568;
@@ -836,6 +867,11 @@
 
 </main>
 
+<button id="selection-vocab-popover" class="selection-vocab-popover" type="button">
+  <i class="fa-solid fa-plus text-xs"></i>
+  <span>加入词汇表</span>
+</button>
+
 <script>
   let vocabularyData = [
     { word: "aspirational", phonetic: "/ˌæspəˈreɪʃənl/", meaning: "令人向往的", example: "Ferrari's cars were aspirational even to people who could not afford them.", exampleZh: "即使对买不起的人来说，法拉利的汽车也令人向往。", audio: "audio/ferrari-luce-jony-ive-ev/aspirational.mp3" },
@@ -855,6 +891,11 @@
   let activeAudio = null;
   let activeAudioButton = null;
   let activeAudioCleanup = null;
+  let pendingSelectionText = '';
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+  }
 
   function resetActiveAudio() {
     if (activeAudio) {
@@ -975,20 +1016,92 @@
       input.placeholder = '该单词已存在 / Already in list';
       input.value = '';
       setTimeout(() => { input.style.borderColor = ''; input.placeholder = '输入新单词 / Add a new word…'; }, 1800);
+      scrollToVocabularyWord(word);
       return;
     }
-    vocabularyData.push({ word, phonetic: '/.../', meaning: '（请补充中文释义）', example: '（请补充英文例句）', exampleZh: '（请补充例句中文翻译）', audio: '' });
+    vocabularyData.push(createVocabularyEntry(word));
     renderVocabulary();
     input.value = '';
     highlightWordInArticle(word);
+    scrollToVocabularyWord(word);
+  }
+
+  function createVocabularyEntry(word) {
+    return { word, phonetic: '/.../', meaning: '（请补充中文释义）', example: `Selected phrase: ${word}`, exampleZh: '（请补充例句中文翻译）', audio: '' };
   }
 
   function highlightWordInArticle(word) {
     document.querySelectorAll('.article-text').forEach(p => {
       const re = new RegExp(`\\b(${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})\\b`, 'gi');
-      p.innerHTML = p.innerHTML.replace(re, `<span class="vocab-highlight" data-word="${word}">$1</span>`);
+      p.innerHTML = p.innerHTML.replace(re, `<span class="vocab-highlight" data-word="${escapeHtml(word)}">$1</span>`);
     });
     makeHighlightsClickable();
+  }
+
+  function scrollToVocabularyWord(word) {
+    requestAnimationFrame(() => {
+      const row = [...document.querySelectorAll('.vocab-row')].find(el => el.dataset.word.toLowerCase() === word.toLowerCase());
+      const target = row || document.getElementById('vocab-container');
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (row) {
+        row.animate([
+          { backgroundColor: 'rgba(227, 18, 11, 0.16)' },
+          { backgroundColor: 'transparent' }
+        ], { duration: 1200, easing: 'ease-out' });
+      }
+    });
+  }
+
+  function getArticleSelection() {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return null;
+    const text = selection.toString().replace(/\s+/g, ' ').trim();
+    if (!text || text.length > 80) return null;
+
+    const range = selection.getRangeAt(0);
+    const container = range.commonAncestorContainer.nodeType === Node.TEXT_NODE
+      ? range.commonAncestorContainer.parentElement
+      : range.commonAncestorContainer;
+    if (!container || !container.closest('.article-text')) return null;
+
+    const rect = range.getBoundingClientRect();
+    if (!rect || rect.width === 0 || rect.height === 0) return null;
+    return { text, rect };
+  }
+
+  function hideSelectionPopover() {
+    const popover = document.getElementById('selection-vocab-popover');
+    if (!popover) return;
+    popover.classList.remove('is-visible');
+    pendingSelectionText = '';
+  }
+
+  function showSelectionPopover() {
+    const data = getArticleSelection();
+    const popover = document.getElementById('selection-vocab-popover');
+    if (!data || !popover) {
+      hideSelectionPopover();
+      return;
+    }
+    pendingSelectionText = data.text;
+    popover.style.top = `${window.scrollY + data.rect.top - 46}px`;
+    popover.style.left = `${window.scrollX + data.rect.left + (data.rect.width / 2)}px`;
+    popover.style.transform = 'translateX(-50%)';
+    popover.classList.add('is-visible');
+  }
+
+  function addSelectedTextToVocabulary() {
+    const word = pendingSelectionText.trim();
+    if (!word) return;
+    if (!vocabularyData.some(i => i.word.toLowerCase() === word.toLowerCase())) {
+      vocabularyData.push(createVocabularyEntry(word));
+      renderVocabulary();
+      highlightWordInArticle(word);
+    }
+    window.getSelection()?.removeAllRanges();
+    hideSelectionPopover();
+    scrollToVocabularyWord(word);
   }
 
   function showTranslation(word, element) {
@@ -1022,24 +1135,25 @@
     document.getElementById('vocab-count').textContent = vocabularyData.length;
 
     vocabularyData.forEach(item => {
+      const wordForJs = JSON.stringify(item.word).replace(/</g, '\\u003c');
       const row = document.createElement('div');
       row.className = 'vocab-row';
       row.dataset.word = item.word;
       row.innerHTML = `
         <div>
-          <div class="vocab-word">${item.word}</div>
-          <div class="vocab-phonetic">${item.phonetic}</div>
+          <div class="vocab-word">${escapeHtml(item.word)}</div>
+          <div class="vocab-phonetic">${escapeHtml(item.phonetic)}</div>
         </div>
         <div class="vocab-meta">
-          <div class="vocab-meaning cn">${item.meaning}</div>
-          <div class="vocab-example">&ldquo;${item.example}&rdquo;</div>
-          <div class="vocab-example-zh cn">${item.exampleZh || ''}</div>
+          <div class="vocab-meaning cn">${escapeHtml(item.meaning)}</div>
+          <div class="vocab-example">&ldquo;${escapeHtml(item.example)}&rdquo;</div>
+          <div class="vocab-example-zh cn">${escapeHtml(item.exampleZh || '')}</div>
         </div>
         <div class="flex items-center gap-2">
-          <button class="icon-btn" title="Edge TTS 朗读 / Listen" onclick="speak(vocabularyData.find(v => v.word === '${item.word.replace(/'/g, "\\'")}'), this)">
+          <button class="icon-btn" title="Edge TTS 朗读 / Listen" onclick='speak(vocabularyData.find(v => v.word === ${wordForJs}), this)'>
             <i class="fa-solid fa-volume-high text-xs"></i>
           </button>
-          <button class="icon-btn danger" title="删除 / Remove" onclick="deleteVocabulary('${item.word.replace(/'/g, "\\'")}')">
+          <button class="icon-btn danger" title="删除 / Remove" onclick='deleteVocabulary(${wordForJs})'>
             <i class="fa-solid fa-xmark text-xs"></i>
           </button>
         </div>
@@ -1066,6 +1180,11 @@
     renderVocabulary();
     makeHighlightsClickable();
     addParagraphAudioControls();
+    document.getElementById('selection-vocab-popover')?.addEventListener('click', addSelectedTextToVocabulary);
+    document.addEventListener('selectionchange', () => setTimeout(showSelectionPopover, 0));
+    document.addEventListener('mousedown', event => {
+      if (!event.target.closest('#selection-vocab-popover')) hideSelectionPopover();
+    });
     try {
       const saved = localStorage.getItem('economist-theme');
       if (saved) switchTheme(saved);
