@@ -248,6 +248,19 @@
     color: var(--economist-red-deep);
   }
 
+  .spoken-word {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
+    transition: text-decoration-color .12s ease, background-color .12s ease;
+  }
+  .spoken-word.is-speaking {
+    text-decoration-color: var(--economist-red);
+    background: rgba(227, 18, 11, 0.08);
+    border-radius: 0.12em;
+  }
+
   .chinese {
     font-family: 'Noto Sans SC', sans-serif;
     font-weight: 400;
@@ -540,6 +553,10 @@
 
   body.premium .article-text { color: #d8cfb8; }
   body.premium .article-block:first-of-type .article-text::first-letter { color: #d4b568; }
+  body.premium .spoken-word.is-speaking {
+    text-decoration-color: #d4b568;
+    background: rgba(212, 181, 104, 0.13);
+  }
   body.premium .chinese {
     color: #9a9282;
     border-top-color: rgba(201, 168, 76, 0.14);
@@ -891,6 +908,8 @@
   let activeAudio = null;
   let activeAudioButton = null;
   let activeAudioCleanup = null;
+  let activeSpokenWords = [];
+  let activeSpokenIndex = -1;
   let pendingSelectionText = '';
 
   function escapeHtml(value) {
@@ -902,6 +921,7 @@
       activeAudio.pause();
       activeAudio.currentTime = 0;
     }
+    clearSpokenWordUnderline();
     if (activeAudioCleanup) {
       activeAudioCleanup();
     } else if (activeAudioButton) {
@@ -911,6 +931,12 @@
     activeAudio = null;
     activeAudioButton = null;
     activeAudioCleanup = null;
+  }
+
+  function clearSpokenWordUnderline() {
+    activeSpokenWords.forEach(word => word.classList.remove('is-speaking'));
+    activeSpokenWords = [];
+    activeSpokenIndex = -1;
   }
 
   function speak(item, button) {
@@ -941,7 +967,47 @@
     });
   }
 
-  function playParagraphAudio(src, playButton, restart = false) {
+  function prepareSpokenWords(paragraph) {
+    if (!paragraph.dataset.spokenPrepared) {
+      const walker = document.createTreeWalker(paragraph, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          return node.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+        }
+      });
+      const textNodes = [];
+      while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+      textNodes.forEach(node => {
+        const fragment = document.createDocumentFragment();
+        node.nodeValue.split(/(\s+)/).forEach(token => {
+          if (!token) return;
+          if (/\s+/.test(token)) {
+            fragment.appendChild(document.createTextNode(token));
+            return;
+          }
+          const span = document.createElement('span');
+          span.className = 'spoken-word';
+          span.textContent = token;
+          fragment.appendChild(span);
+        });
+        node.parentNode.replaceChild(fragment, node);
+      });
+      paragraph.dataset.spokenPrepared = 'true';
+      makeHighlightsClickable();
+    }
+    return [...paragraph.querySelectorAll('.spoken-word')];
+  }
+
+  function updateSpokenWordUnderline(audio) {
+    if (!activeSpokenWords.length || !Number.isFinite(audio.duration) || audio.duration <= 0) return;
+    const index = Math.min(activeSpokenWords.length - 1, Math.floor((audio.currentTime / audio.duration) * activeSpokenWords.length));
+    if (index === activeSpokenIndex) return;
+    if (activeSpokenWords[activeSpokenIndex]) activeSpokenWords[activeSpokenIndex].classList.remove('is-speaking');
+    activeSpokenWords[index].classList.add('is-speaking');
+    activeSpokenIndex = index;
+  }
+
+  function playParagraphAudio(src, playButton, paragraph, restart = false) {
     if (activeAudio && activeAudio.dataset && activeAudio.dataset.src === src && !restart) {
       if (activeAudio.paused) {
         activeAudio.play();
@@ -956,6 +1022,7 @@
     }
 
     resetActiveAudio();
+    activeSpokenWords = prepareSpokenWords(paragraph);
     const audio = new Audio(src);
     audio.dataset.src = src;
     activeAudio = audio;
@@ -966,6 +1033,8 @@
     };
     playButton.classList.add('is-playing');
     playButton.innerHTML = '<i class="fa-solid fa-pause text-xs"></i><span>Pause paragraph</span>';
+    audio.addEventListener('timeupdate', () => updateSpokenWordUnderline(audio));
+    audio.addEventListener('loadedmetadata', () => updateSpokenWordUnderline(audio));
     audio.onended = audio.onerror = () => resetActiveAudio();
     audio.play().catch(() => resetActiveAudio());
   }
@@ -982,14 +1051,14 @@
       playButton.type = 'button';
       playButton.className = 'paragraph-audio-btn';
       playButton.innerHTML = '<i class="fa-solid fa-play text-xs"></i><span>Play paragraph</span>';
-      playButton.addEventListener('click', () => playParagraphAudio(src, playButton));
+      playButton.addEventListener('click', () => playParagraphAudio(src, playButton, paragraph));
 
       const restartButton = document.createElement('button');
       restartButton.type = 'button';
       restartButton.className = 'paragraph-audio-restart';
       restartButton.title = 'Restart paragraph audio';
       restartButton.innerHTML = '<i class="fa-solid fa-rotate-left text-xs"></i>';
-      restartButton.addEventListener('click', () => playParagraphAudio(src, playButton, true));
+      restartButton.addEventListener('click', () => playParagraphAudio(src, playButton, paragraph, true));
 
       controls.append(playButton, restartButton);
       paragraph.insertAdjacentElement('afterend', controls);
