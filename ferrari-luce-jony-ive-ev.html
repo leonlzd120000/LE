@@ -641,12 +641,82 @@
   }
   body.premium .article-footer .red-rule { background: #d4b568; }
 
+  .news-layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+  }
+  .news-sidebar {
+    position: sticky;
+    top: 112px;
+    align-self: start;
+    border: 1px solid var(--rule);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.58);
+    padding: 18px;
+    box-shadow: 0 18px 50px rgba(30, 25, 18, 0.06);
+  }
+  .news-sidebar-title {
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 12px;
+  }
+  .news-list {
+    display: grid;
+    gap: 8px;
+  }
+  .news-list button {
+    width: 100%;
+    text-align: left;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: transparent;
+    padding: 12px 12px 13px;
+    color: var(--ink-2);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 0.98rem;
+    line-height: 1.25;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .news-list button:hover,
+  .news-list button.active {
+    border-color: rgba(227, 18, 11, 0.2);
+    background: rgba(227, 18, 11, 0.07);
+    color: var(--ink);
+  }
+  .news-reader[hidden] { display: none; }
+
+  body.premium .news-sidebar {
+    background: rgba(20, 18, 14, 0.76);
+    border-color: rgba(201, 168, 76, 0.16);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+  }
+  body.premium .news-list button { color: #d8cfb8; }
+  body.premium .news-list button:hover,
+  body.premium .news-list button.active {
+    border-color: rgba(212, 181, 104, 0.28);
+    background: rgba(212, 181, 104, 0.1);
+    color: #f4ecd8;
+  }
+
   body, .masthead, .vocab-card, h1, h2, p, span, input, button, div, .icon-btn {
     transition: background-color .4s ease, color .4s ease,
                 border-color .4s ease, box-shadow .4s ease;
   }
 
   @media (max-width: 768px) {
+    .news-layout { display: block; }
+    .news-sidebar {
+      position: relative;
+      top: auto;
+      margin-bottom: 36px;
+    }
     .vocab-row { grid-template-columns: 1fr auto; }
     .vocab-row > .vocab-meta { grid-column: 1 / -1; }
   }
@@ -668,7 +738,19 @@
   </div>
 </header>
 
-<main class="max-w-5xl mx-auto px-8 pt-16 pb-24">
+<main class="max-w-6xl mx-auto px-8 pt-16 pb-24">
+
+<div class="news-layout">
+  <aside class="news-sidebar" aria-label="News directory">
+    <div class="news-sidebar-title cn">新闻目录</div>
+    <nav class="news-list" id="news-list">
+      <button class="active" type="button" data-news-target="ferrari-luce-jony-ive-ev">
+        How Ferrari Bungled the Design of its First EV
+      </button>
+    </nav>
+  </aside>
+
+  <div class="news-reader" data-news-panel="ferrari-luce-jony-ive-ev">
 
   <section class="max-w-3xl">
     <div class="kicker"><span class="kicker-rule"></span> Transportation · Ferrari's first EV</div>
@@ -881,6 +963,9 @@
   <footer class="article-footer max-w-3xl">
     <div class="red-rule"></div>
   </footer>
+
+  </div>
+</div>
 
 </main>
 
@@ -1173,6 +1258,24 @@
     scrollToVocabularyWord(word);
   }
 
+  function initializeNewsDirectory() {
+    const buttons = [...document.querySelectorAll('[data-news-target]')];
+    const panels = [...document.querySelectorAll('[data-news-panel]')];
+    if (!buttons.length || !panels.length) return;
+
+    function showNews(id) {
+      buttons.forEach(button => button.classList.toggle('active', button.dataset.newsTarget === id));
+      panels.forEach(panel => { panel.hidden = panel.dataset.newsPanel !== id; });
+      resetActiveAudio();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => showNews(button.dataset.newsTarget));
+    });
+    showNews(buttons.find(button => button.classList.contains('active'))?.dataset.newsTarget || buttons[0].dataset.newsTarget);
+  }
+
   function showTranslation(word, element) {
     const item = vocabularyData.find(v => v.word === word);
     if (!item) return;
@@ -1249,6 +1352,7 @@
     renderVocabulary();
     makeHighlightsClickable();
     addParagraphAudioControls();
+    initializeNewsDirectory();
     document.getElementById('selection-vocab-popover')?.addEventListener('click', addSelectedTextToVocabulary);
     document.addEventListener('selectionchange', () => setTimeout(showSelectionPopover, 0));
     document.addEventListener('mousedown', event => {
