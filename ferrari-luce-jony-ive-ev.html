@@ -211,8 +211,11 @@
   }
 
   .vocab-highlight {
-    background: linear-gradient(180deg, transparent 62%, rgba(227, 18, 11, 0.16) 62%);
-    padding: 0 2px;
+    background: rgba(227, 18, 11, 0.12);
+    padding: 0.04em 0.16em 0.08em;
+    border-radius: 0.16em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
     cursor: pointer;
     font-weight: 600;
     color: var(--ink);
@@ -220,14 +223,17 @@
     transition: all .2s ease;
   }
   .vocab-highlight:hover {
-    background: linear-gradient(180deg, transparent 0%, rgba(227, 18, 11, 0.18) 0%);
+    background: rgba(227, 18, 11, 0.18);
     color: var(--economist-red-deep);
   }
 
   .chinese-highlight {
-    background: linear-gradient(180deg, transparent 62%, var(--highlight-cn) 62%);
+    background: var(--highlight-cn);
     color: var(--highlight-cn-ink);
-    padding: 0 2px;
+    padding: 0.04em 0.18em 0.08em;
+    border-radius: 0.16em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
     font-weight: 500;
   }
 
@@ -444,16 +450,16 @@
   }
 
   body.premium .vocab-highlight {
-    background: linear-gradient(180deg, transparent 62%, rgba(212, 181, 104, 0.18) 62%);
+    background: rgba(212, 181, 104, 0.18);
     color: #f4ecd8;
     border-bottom-color: rgba(212, 181, 104, 0.6);
   }
   body.premium .vocab-highlight:hover {
-    background: linear-gradient(180deg, transparent 0%, rgba(212, 181, 104, 0.22) 0%);
+    background: rgba(212, 181, 104, 0.24);
     color: #d4b568;
   }
   body.premium .chinese-highlight {
-    background: linear-gradient(180deg, transparent 62%, rgba(212, 181, 104, 0.18) 62%);
+    background: rgba(212, 181, 104, 0.18);
     color: #d4b568;
   }
 
@@ -533,14 +539,12 @@
   <div class="max-w-5xl mx-auto px-8 py-5 flex items-center justify-between gap-6">
     <div class="flex items-center gap-4">
       <span class="brand-mark text-xl">The Economist</span>
-      <span class="pill"><i class="fa-solid fa-book-open-reader text-[10px]"></i> Learning Edition</span>
     </div>
     <div class="flex items-center gap-5">
       <div class="theme-toggle cn">
         <button class="theme-btn active" data-theme="clean" onclick="switchTheme('clean')">简洁</button>
         <button class="theme-btn" data-theme="premium" onclick="switchTheme('premium')">高端质感</button>
       </div>
-      <span class="meta-line hidden md:inline">VOL. CCCXVI · MAY 2026</span>
     </div>
   </div>
 </header>
@@ -757,10 +761,6 @@
 
   <footer class="article-footer max-w-3xl">
     <div class="red-rule"></div>
-    <div class="flex flex-wrap justify-between gap-4">
-      <div>© The Economist Newspaper Limited · Learning Edition</div>
-      <div>Typeset in <span class="serif-display italic" style="font-size:14px">Playfair Display</span> &amp; Source Serif</div>
-    </div>
   </footer>
 
 </main>
