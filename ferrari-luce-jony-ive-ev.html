@@ -188,6 +188,56 @@
     letter-spacing: 0.005em;
   }
 
+  .paragraph-audio {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0.9rem 0 0;
+    font-family: 'Inter', sans-serif;
+  }
+  .paragraph-audio-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 1px solid rgba(227, 18, 11, 0.22);
+    background: rgba(227, 18, 11, 0.07);
+    color: var(--economist-red-deep);
+    border-radius: 999px;
+    padding: 0.42rem 0.82rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all .2s ease;
+  }
+  .paragraph-audio-btn:hover {
+    border-color: rgba(227, 18, 11, 0.42);
+    background: rgba(227, 18, 11, 0.12);
+    transform: translateY(-1px);
+  }
+  .paragraph-audio-btn.is-playing {
+    background: var(--economist-red);
+    color: #fff;
+    border-color: var(--economist-red);
+  }
+  .paragraph-audio-restart {
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--ink-3);
+    background: rgba(255, 255, 255, 0.64);
+    transition: all .2s ease;
+  }
+  .paragraph-audio-restart:hover {
+    color: var(--economist-red-deep);
+    border-color: rgba(227, 18, 11, 0.32);
+    background: rgba(227, 18, 11, 0.08);
+  }
+
   .article-block:first-of-type .article-text::first-letter {
     font-family: 'Playfair Display', serif;
     font-weight: 800;
@@ -554,7 +604,7 @@
   }
 </style>
 </head>
-<body>
+<body data-slug="ferrari-luce-jony-ive-ev">
 
 <header class="masthead sticky top-0 z-50">
   <div class="max-w-5xl mx-auto px-8 py-5 flex items-center justify-between gap-6">
@@ -803,24 +853,105 @@
   ];
 
   let activeAudio = null;
+  let activeAudioButton = null;
+  let activeAudioCleanup = null;
 
-  function speak(item, button) {
-    if (!item || !item.audio) return;
+  function resetActiveAudio() {
     if (activeAudio) {
       activeAudio.pause();
       activeAudio.currentTime = 0;
     }
+    if (activeAudioCleanup) {
+      activeAudioCleanup();
+    } else if (activeAudioButton) {
+      activeAudioButton.classList.remove('is-playing');
+      activeAudioButton.innerHTML = '<i class="fa-solid fa-play text-xs"></i><span>Play paragraph</span>';
+    }
+    activeAudio = null;
+    activeAudioButton = null;
+    activeAudioCleanup = null;
+  }
+
+  function speak(item, button) {
+    if (!item || !item.audio) return;
+    resetActiveAudio();
     const original = button ? button.innerHTML : '';
     const audio = new Audio(item.audio);
     activeAudio = audio;
+    activeAudioCleanup = () => {
+      if (button) button.innerHTML = original;
+    };
     if (button) button.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xs"></i>';
     audio.onended = audio.onerror = () => {
-      if (button) button.innerHTML = original;
-      if (activeAudio === audio) activeAudio = null;
+      if (activeAudio === audio) {
+        if (activeAudioCleanup) activeAudioCleanup();
+        activeAudio = null;
+        activeAudioButton = null;
+        activeAudioCleanup = null;
+      }
     };
     audio.play().catch(() => {
-      if (button) button.innerHTML = original;
-      if (activeAudio === audio) activeAudio = null;
+      if (activeAudio === audio) {
+        if (activeAudioCleanup) activeAudioCleanup();
+        activeAudio = null;
+        activeAudioButton = null;
+        activeAudioCleanup = null;
+      }
+    });
+  }
+
+  function playParagraphAudio(src, playButton, restart = false) {
+    if (activeAudio && activeAudio.dataset && activeAudio.dataset.src === src && !restart) {
+      if (activeAudio.paused) {
+        activeAudio.play();
+        playButton.classList.add('is-playing');
+        playButton.innerHTML = '<i class="fa-solid fa-pause text-xs"></i><span>Pause paragraph</span>';
+      } else {
+        activeAudio.pause();
+        playButton.classList.remove('is-playing');
+        playButton.innerHTML = '<i class="fa-solid fa-play text-xs"></i><span>Resume paragraph</span>';
+      }
+      return;
+    }
+
+    resetActiveAudio();
+    const audio = new Audio(src);
+    audio.dataset.src = src;
+    activeAudio = audio;
+    activeAudioButton = playButton;
+    activeAudioCleanup = () => {
+      playButton.classList.remove('is-playing');
+      playButton.innerHTML = '<i class="fa-solid fa-play text-xs"></i><span>Play paragraph</span>';
+    };
+    playButton.classList.add('is-playing');
+    playButton.innerHTML = '<i class="fa-solid fa-pause text-xs"></i><span>Pause paragraph</span>';
+    audio.onended = audio.onerror = () => resetActiveAudio();
+    audio.play().catch(() => resetActiveAudio());
+  }
+
+  function addParagraphAudioControls() {
+    const slug = document.body.dataset.slug || 'ferrari-luce-jony-ive-ev';
+    document.querySelectorAll('.article-block .article-text').forEach((paragraph, index) => {
+      if (paragraph.nextElementSibling && paragraph.nextElementSibling.classList.contains('paragraph-audio')) return;
+      const src = `audio/${slug}/paragraphs/paragraph-${String(index + 1).padStart(2, '0')}.mp3`;
+      const controls = document.createElement('div');
+      controls.className = 'paragraph-audio';
+
+      const playButton = document.createElement('button');
+      playButton.type = 'button';
+      playButton.className = 'paragraph-audio-btn';
+      playButton.innerHTML = '<i class="fa-solid fa-play text-xs"></i><span>Play paragraph</span>';
+      playButton.addEventListener('click', () => playParagraphAudio(src, playButton));
+
+      const restartButton = document.createElement('button');
+      restartButton.type = 'button';
+      restartButton.className = 'paragraph-audio-restart';
+      restartButton.title = 'Restart paragraph audio';
+      restartButton.innerHTML = '<i class="fa-solid fa-rotate-left text-xs"></i>';
+      restartButton.addEventListener('click', () => playParagraphAudio(src, playButton, true));
+
+      controls.append(playButton, restartButton);
+      paragraph.insertAdjacentElement('afterend', controls);
     });
   }
 
@@ -934,6 +1065,7 @@
   window.addEventListener('DOMContentLoaded', () => {
     renderVocabulary();
     makeHighlightsClickable();
+    addParagraphAudioControls();
     try {
       const saved = localStorage.getItem('economist-theme');
       if (saved) switchTheme(saved);
