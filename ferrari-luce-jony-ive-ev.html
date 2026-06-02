@@ -1330,14 +1330,14 @@
       input.placeholder = '该单词已存在 / Already in list';
       input.value = '';
       setTimeout(() => { input.style.borderColor = ''; input.placeholder = '输入新单词 / Add a new word…'; }, 1800);
-      scrollToVocabularyWord(word);
+      markVocabularyWord(word);
       return;
     }
     vocabularyData.push(createVocabularyEntry(word));
     renderVocabulary();
     input.value = '';
     highlightWordInArticle(word);
-    scrollToVocabularyWord(word);
+    markVocabularyWord(word);
   }
 
   function createVocabularyEntry(word) {
@@ -1352,12 +1352,9 @@
     makeHighlightsClickable();
   }
 
-  function scrollToVocabularyWord(word) {
+  function markVocabularyWord(word) {
     requestAnimationFrame(() => {
       const row = [...document.querySelectorAll('.vocab-row')].find(el => el.dataset.word.toLowerCase() === word.toLowerCase());
-      const target = row || document.getElementById('vocab-container');
-      if (!target) return;
-      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
       if (row) {
         row.animate([
           { backgroundColor: 'rgba(227, 18, 11, 0.16)' },
@@ -1415,7 +1412,7 @@
     }
     window.getSelection()?.removeAllRanges();
     hideSelectionPopover();
-    scrollToVocabularyWord(word);
+    markVocabularyWord(word);
   }
 
   function initializeNewsDirectory() {
