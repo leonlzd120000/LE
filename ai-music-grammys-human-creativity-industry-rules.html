@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Economist · AI is blowing up music. How should the Grammys handle it?</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root {
+    --paper: #fbf8f1;
+    --paper-2: #f3eee2;
+    --ink: #1a1614;
+    --ink-2: #3a342f;
+    --ink-3: #6b6359;
+    --ink-4: #9a9286;
+    --rule: #e6dfcf;
+    --rule-2: #d8cfba;
+    --economist-red: #e3120b;
+    --economist-red-deep: #b30c06;
+    --accent: #b8860b;
+    --highlight-cn: #fff2b8;
+    --highlight-cn-ink: #6b4f0a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', 'Noto Sans SC', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(0,0,0,0.018) 1px, transparent 0);
+    background-size: 4px 4px;
+    opacity: 0.6;
+  }
+
+  body > * { position: relative; z-index: 1; }
+
+  .serif-display { font-family: 'Playfair Display', 'Source Serif 4', Georgia, serif; }
+  .serif-body { font-family: 'Source Serif 4', Georgia, serif; }
+  .sans { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
+  .cn { font-family: 'Noto Sans SC', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+
+  .smallcaps {
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    font-size: 0.72rem;
+    color: var(--ink-3);
+  }
+
+  .masthead {
+    background: rgba(251, 248, 241, 0.85);
+    backdrop-filter: saturate(140%) blur(14px);
+    -webkit-backdrop-filter: saturate(140%) blur(14px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .brand-mark {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    background: var(--economist-red);
+    color: #fff;
+    padding: 4px 14px 6px;
+    line-height: 1;
+    border-radius: 2px;
+  }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--economist-red);
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    background: transparent;
+  }
+
+  .meta-line {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+
+  .theme-toggle {
+    display: inline-flex; align-items: center;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .theme-btn {
+    padding: 6px 14px;
+    border: none; border-radius: 999px;
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    font-size: 12px; font-weight: 500;
+    cursor: pointer;
+    background: transparent;
+    color: var(--ink-3);
+    transition: all .35s cubic-bezier(.23,1,.32,1);
+    white-space: nowrap;
+  }
+  .theme-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+    box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  }
+
+  .kicker {
+    display: inline-flex; align-items: baseline; gap: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--economist-red);
+  }
+  .kicker .kicker-rule {
+    width: 36px; height: 2px; background: var(--economist-red);
+    display: inline-block;
+  }
+
+  h1.hero-en {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: clamp(2.6rem, 5.6vw, 4.6rem);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  h1.hero-en em { font-style: italic; font-weight: 700; color: var(--economist-red-deep); }
+
+  h2.hero-cn {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    color: var(--ink-2);
+    margin-top: 18px;
+  }
+
+  .standfirst {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.65;
+    color: var(--ink-2);
+    max-width: 38em;
+    margin-top: 22px;
+  }
+
+  .byline {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    display: flex; align-items: center; gap: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+  .byline .dot { width: 4px; height: 4px; background: var(--ink-4); border-radius: 999px; }
+
+  .article-text {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.18rem;
+    line-height: 1.78;
+    color: var(--ink);
+    letter-spacing: 0.005em;
+  }
+
+  .paragraph-audio {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0.9rem 0 0;
+    font-family: 'Inter', sans-serif;
+  }
+  .paragraph-audio-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 1px solid rgba(227, 18, 11, 0.22);
+    background: rgba(227, 18, 11, 0.07);
+    color: var(--economist-red-deep);
+    border-radius: 999px;
+    padding: 0.42rem 0.82rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all .2s ease;
+  }
+  .paragraph-audio-btn:hover {
+    border-color: rgba(227, 18, 11, 0.42);
+    background: rgba(227, 18, 11, 0.12);
+    transform: translateY(-1px);
+  }
+  .paragraph-audio-btn.is-playing {
+    background: var(--economist-red);
+    color: #fff;
+    border-color: var(--economist-red);
+  }
+  .paragraph-audio-restart {
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--ink-3);
+    background: rgba(255, 255, 255, 0.64);
+    transition: all .2s ease;
+  }
+  .paragraph-audio-restart:hover {
+    color: var(--economist-red-deep);
+    border-color: rgba(227, 18, 11, 0.32);
+    background: rgba(227, 18, 11, 0.08);
+  }
+
+  .article-block:first-of-type .article-text::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: 4.6em;
+    float: left;
+    line-height: 0.85;
+    margin: 0.08em 0.12em 0 -0.04em;
+    color: var(--economist-red-deep);
+  }
+
+  .spoken-word {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
+    transition: text-decoration-color .12s ease, background-color .12s ease;
+  }
+  .spoken-word.is-speaking {
+    text-decoration-color: var(--economist-red);
+    background: rgba(227, 18, 11, 0.08);
+    border-radius: 0.12em;
+  }
+
+  .chinese {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 400;
+    color: var(--ink-2);
+    font-size: 1.02rem;
+    line-height: 1.95;
+    margin-top: 1.1rem;
+    padding-top: 1.1rem;
+    border-top: 1px dashed var(--rule);
+    letter-spacing: 0.01em;
+  }
+
+  .vocab-highlight {
+    background: rgba(227, 18, 11, 0.12);
+    padding: 0.04em 0.16em 0.08em;
+    border-radius: 0.16em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 1px solid rgba(227, 18, 11, 0.45);
+    transition: all .2s ease;
+  }
+  .vocab-highlight:hover {
+    background: rgba(227, 18, 11, 0.18);
+    color: var(--economist-red-deep);
+  }
+
+  .chinese-highlight {
+    background: var(--highlight-cn);
+    color: var(--highlight-cn-ink);
+    padding: 0.04em 0.18em 0.08em;
+    border-radius: 0.16em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    font-weight: 500;
+  }
+
+  .section-divider {
+    display: flex; align-items: center; gap: 18px;
+    margin: 80px 0 40px;
+    color: var(--ink-3);
+  }
+  .section-divider::before,
+  .section-divider::after {
+    content: ""; flex: 1; height: 1px; background: var(--rule);
+  }
+  .section-divider .ornament {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .vocab-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  }
+
+  .vocab-row {
+    display: grid;
+    grid-template-columns: minmax(180px, 220px) 1fr auto;
+    gap: 28px;
+    align-items: start;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .vocab-row:last-child { border-bottom: 0; }
+
+  .vocab-word {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .vocab-phonetic {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.78rem;
+    color: var(--ink-3);
+    margin-top: 4px;
+    letter-spacing: 0;
+  }
+  .vocab-meaning {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .vocab-example {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    color: var(--ink-3);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-top: 6px;
+    padding-left: 12px;
+    border-left: 2px solid var(--rule-2);
+  }
+  .vocab-example-zh {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-style: normal;
+    color: var(--ink-3);
+    font-size: 0.86rem;
+    line-height: 1.55;
+    margin-top: 4px;
+    opacity: 0.9;
+  }
+
+  .icon-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: 999px;
+    color: var(--ink-3);
+    background: transparent;
+    border: 1px solid var(--rule);
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .icon-btn:hover { color: var(--economist-red); border-color: var(--economist-red); background: rgba(227,18,11,0.04); }
+  .icon-btn.danger:hover { color: #b30c06; border-color: #b30c06; }
+
+  .input-field {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--rule-2);
+    border-radius: 4px;
+    padding: 12px 16px;
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s ease;
+  }
+  .input-field:focus { border-color: var(--ink); }
+  .input-field::placeholder { color: var(--ink-4); }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 12px 22px;
+    border-radius: 4px;
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: all .2s ease;
+  }
+  .btn-primary:hover { background: var(--economist-red); }
+  .btn-primary:active { transform: translateY(1px); }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+
+  .translation-tooltip {
+    position: absolute;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    z-index: 100;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .translation-tooltip .tooltip-phonetic {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    opacity: 0.72;
+    margin-bottom: 3px;
+  }
+  .translation-tooltip .tooltip-meaning {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .translation-tooltip::after {
+    content: ""; position: absolute;
+    bottom: -5px; left: 16px;
+    width: 10px; height: 10px;
+    background: var(--ink);
+    transform: rotate(45deg);
+  }
+
+  .selection-vocab-popover {
+    position: absolute;
+    z-index: 120;
+    display: none;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.72rem;
+    border: 1px solid rgba(227, 18, 11, 0.24);
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.18);
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: transform .18s ease, background .18s ease;
+  }
+  .selection-vocab-popover:hover {
+    background: var(--economist-red);
+    transform: translateY(-1px);
+  }
+  .selection-vocab-popover.is-visible { display: inline-flex; }
+
+  .article-footer {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 2px solid var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+  }
+  .article-footer .red-rule {
+    width: 60px; height: 4px;
+    background: var(--economist-red);
+    margin-bottom: 18px;
+  }
+
+  /* PREMIUM (高端质感) — Dark theme */
+  body.premium {
+    background: #0e0d0c;
+    color: #e8e1d1;
+  }
+  body.premium::before {
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.025) 1px, transparent 0);
+    opacity: 0.5;
+  }
+
+  body.premium .masthead {
+    background: rgba(14, 13, 12, 0.88);
+    border-bottom-color: rgba(201, 168, 76, 0.18);
+  }
+  body.premium .brand-mark {
+    background: linear-gradient(135deg, #d4b568, #9a7b30);
+    color: #0e0d0c;
+  }
+  body.premium .pill {
+    color: #d4b568;
+    border-color: rgba(212, 181, 104, 0.5);
+  }
+  body.premium .meta-line { color: #8a8170; }
+
+  body.premium .theme-toggle {
+    background: #1a1815;
+    border-color: rgba(201, 168, 76, 0.18);
+  }
+  body.premium .theme-btn { color: #8a8170; }
+  body.premium .theme-btn.active {
+    background: linear-gradient(135deg, #d4b568, #9a7b30);
+    color: #0e0d0c;
+    box-shadow: 0 2px 12px rgba(212, 181, 104, 0.25);
+  }
+
+  body.premium .kicker { color: #d4b568; }
+  body.premium .kicker .kicker-rule { background: #d4b568; }
+
+  body.premium h1.hero-en { color: #f4ecd8; }
+  body.premium h1.hero-en em { color: #d4b568; }
+  body.premium h2.hero-cn { color: #b8b0a0; }
+  body.premium .standfirst { color: #b8b0a0; }
+  body.premium .byline {
+    color: #8a8170;
+    border-top-color: rgba(201, 168, 76, 0.18);
+  }
+  body.premium .byline .dot { background: #6a6358; }
+
+  body.premium .article-text { color: #d8cfb8; }
+  body.premium .article-block:first-of-type .article-text::first-letter { color: #d4b568; }
+  body.premium .spoken-word.is-speaking {
+    text-decoration-color: #d4b568;
+    background: rgba(212, 181, 104, 0.13);
+  }
+  body.premium .chinese {
+    color: #9a9282;
+    border-top-color: rgba(201, 168, 76, 0.14);
+  }
+
+  body.premium .vocab-highlight {
+    background: rgba(212, 181, 104, 0.18);
+    color: #f4ecd8;
+    border-bottom-color: rgba(212, 181, 104, 0.6);
+  }
+  body.premium .vocab-highlight:hover {
+    background: rgba(212, 181, 104, 0.24);
+    color: #d4b568;
+  }
+  body.premium .chinese-highlight {
+    background: rgba(212, 181, 104, 0.18);
+    color: #d4b568;
+  }
+
+  body.premium .section-divider { color: #8a8170; }
+  body.premium .section-divider::before,
+  body.premium .section-divider::after { background: rgba(201, 168, 76, 0.18); }
+  body.premium .section-divider .ornament { color: #8a8170; }
+
+  body.premium .smallcaps { color: #8a8170; }
+
+  body.premium .vocab-card {
+    background: #16140f;
+    border-color: rgba(201, 168, 76, 0.18);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  }
+  body.premium .vocab-row { border-bottom-color: rgba(201, 168, 76, 0.12); }
+  body.premium .vocab-word { color: #f4ecd8; }
+  body.premium .vocab-phonetic { color: #8a8170; }
+  body.premium .vocab-meaning { color: #d8cfb8; }
+  body.premium .vocab-example {
+    color: #8a8170;
+    border-left-color: rgba(201, 168, 76, 0.25);
+  }
+
+  body.premium .icon-btn {
+    color: #8a8170;
+    border-color: rgba(201, 168, 76, 0.22);
+  }
+  body.premium .icon-btn:hover {
+    color: #d4b568;
+    border-color: #d4b568;
+    background: rgba(212, 181, 104, 0.08);
+  }
+
+  body.premium .input-field {
+    background: #1a1814;
+    border-color: rgba(201, 168, 76, 0.22);
+    color: #e8e1d1;
+  }
+  body.premium .input-field:focus { border-color: #d4b568; }
+  body.premium .input-field::placeholder { color: #6a6358; }
+
+  body.premium .btn-primary {
+    background: linear-gradient(135deg, #d4b568, #9a7b30);
+    color: #0e0d0c;
+  }
+  body.premium .btn-primary:hover { filter: brightness(1.08); }
+
+  body.premium .stat-num { color: #f4ecd8; }
+
+  body.premium .translation-tooltip {
+    background: linear-gradient(135deg, #d4b568, #9a7b30);
+    color: #0e0d0c;
+  }
+  body.premium .translation-tooltip::after { background: #b89549; }
+
+  body.premium .selection-vocab-popover {
+    background: linear-gradient(135deg, #d4b568, #9a7b30);
+    color: #0e0d0c;
+    border-color: rgba(212, 181, 104, 0.38);
+  }
+
+  body.premium .article-footer {
+    border-top-color: #d4b568;
+    color: #8a8170;
+  }
+  body.premium .article-footer .red-rule { background: #d4b568; }
+
+  .news-layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+  }
+  .news-sidebar {
+    position: sticky;
+    top: 112px;
+    align-self: start;
+    border: 1px solid var(--rule);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.58);
+    padding: 18px;
+    box-shadow: 0 18px 50px rgba(30, 25, 18, 0.06);
+  }
+  .news-sidebar-title {
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 12px;
+  }
+  .news-list {
+    display: grid;
+    gap: 8px;
+  }
+  .news-list button {
+    width: 100%;
+    text-align: left;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: transparent;
+    padding: 12px 12px 13px;
+    color: var(--ink-2);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 0.98rem;
+    line-height: 1.25;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .news-list button:hover,
+  .news-list button.active {
+    border-color: rgba(227, 18, 11, 0.2);
+    background: rgba(227, 18, 11, 0.07);
+    color: var(--ink);
+  }
+  .news-reader[hidden] { display: none; }
+
+  body.premium .news-sidebar {
+    background: rgba(20, 18, 14, 0.76);
+    border-color: rgba(201, 168, 76, 0.16);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+  }
+  body.premium .news-list button { color: #d8cfb8; }
+  body.premium .news-list button:hover,
+  body.premium .news-list button.active {
+    border-color: rgba(212, 181, 104, 0.28);
+    background: rgba(212, 181, 104, 0.1);
+    color: #f4ecd8;
+  }
+
+  body, .masthead, .vocab-card, h1, h2, p, span, input, button, div, .icon-btn {
+    transition: background-color .4s ease, color .4s ease,
+                border-color .4s ease, box-shadow .4s ease;
+  }
+
+  @media (max-width: 768px) {
+    .news-layout { display: block; }
+    .news-sidebar {
+      position: relative;
+      top: auto;
+      margin-bottom: 36px;
+    }
+    .vocab-row { grid-template-columns: 1fr auto; }
+    .vocab-row > .vocab-meta { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body data-slug="ai-music-grammys-human-creativity-industry-rules">
+<!-- verification-snippets:
+The public page identifies the episode as a Decoder podcast item from The Verge.
+The discussion centers on Recording Academy CEO Harvey Mason Jr.
+The article summary asks how much human touch is enough.
+-->
+
+<header class="masthead sticky top-0 z-50">
+  <div class="max-w-5xl mx-auto px-8 py-5 flex items-center justify-between gap-6">
+    <div class="flex items-center gap-4">
+      <span class="brand-mark text-xl">The Economist</span>
+    </div>
+    <div class="flex items-center gap-5">
+      <div class="theme-toggle cn">
+        <button class="theme-btn active" data-theme="clean" onclick="switchTheme('clean')">简洁</button>
+        <button class="theme-btn" data-theme="premium" onclick="switchTheme('premium')">高端质感</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-8 pt-16 pb-24">
+
+<div class="news-layout">
+  <aside class="news-sidebar" aria-label="News directory">
+    <div class="news-sidebar-title cn">新闻目录</div>
+    <nav class="news-list" id="news-list">
+      <button type="button" onclick="location.href='gemini-omni-hands-on-deepfake-ai-video.html'">
+        Google&#x27;s New Anything-to-Anything AI Model Is Wild
+      </button>
+      <button class="active" type="button" onclick="location.href='ai-music-grammys-human-creativity-industry-rules.html'">
+        AI is blowing up music. How should the Grammys handle it?
+      </button>
+      <button type="button" onclick="location.href='ai-leaders-jobs-narrative-pivot.html'">
+        AI Leaders Reframe the Jobs Story
+      </button>
+      <button type="button" onclick="location.href='ferrari-luce-jony-ive-ev.html'">
+        How Ferrari Bungled the Design of its First EV
+      </button>
+    </nav>
+  </aside>
+
+  <div class="news-reader" data-news-panel="ai-music-grammys-human-creativity-industry-rules" data-audio-slug="ai-music-grammys-human-creativity-industry-rules">
+
+  <section class="max-w-3xl">
+    <div class="kicker"><span class="kicker-rule"></span> Decoder podcast discussion on AI, music, and award rules</div>
+
+    <h1 class="hero-en mt-6">AI is blowing up music. How should the Grammys handle it?</h1>
+
+    <h2 class="hero-cn cn">AI 正在重塑音乐：格莱美该如何应对？</h2>
+
+    <p class="standfirst">A self-contained English-learning package about how generative AI is changing music production, why the Recording Academy is focused on human creativity, and how award rules may evolve as AI-made songs flood streaming platforms.</p>
+
+    <div class="byline">
+      <span class="smallcaps">来源</span>
+      <span class="dot"></span>
+      <a href="https://www.theverge.com/podcast/940831/ai-grammys-music-recording-harvey-mason" target="_blank" rel="noopener noreferrer">The Verge 原文链接</a>
+    </div>
+  </section>
+
+  <article class="mt-16 max-w-3xl space-y-12">
+
+    <div class="article-block">
+      <p class="article-text"><span class="vocab-highlight" data-word="generative" data-phonetic="/ˈdʒenərətɪv/" data-meaning="生成式的；能产生新内容的">Generative</span> AI has moved from a side topic to a central issue in music. Producers, songwriters, and platforms now face a new question: when a machine helps make a song, who should receive <span class="vocab-highlight" data-word="credit" data-phonetic="/ˈkredɪt/" data-meaning="署名；功劳；认可">credit</span>?</p>
+      <p class="chinese cn">生成式 AI 已经从边缘话题变成音乐行业的核心问题。制作人、词曲作者和平台现在都要面对一个新问题：当机器帮助创作歌曲时，谁应该获得署名？</p>
+    </div>
+    <div class="article-block">
+      <p class="article-text">The Verge&#x27;s Decoder episode focuses on Harvey Mason Jr., the CEO of the Recording Academy, the organization behind the Grammy Awards. His role is complicated because he is both an industry leader and an experienced music creator.</p>
+      <p class="chinese cn">The Verge 的 Decoder 节目聚焦于 Harvey Mason Jr.，他是负责格莱美奖的 Recording Academy 首席执行官。他的角色很复杂，因为他既是行业管理者，也是一位经验丰富的音乐创作者。</p>
+    </div>
+    <div class="article-block">
+      <p class="article-text">AI tools can now suggest melodies, create backing vocals, generate stems, and help musicians test ideas quickly. For some artists, AI acts like a tireless writing partner that offers many directions in seconds.</p>
+      <p class="chinese cn">AI 工具现在可以提出旋律建议、生成和声、制作分轨素材，并帮助音乐人快速测试想法。对一些艺术家来说，AI 就像一个不知疲倦的写作伙伴，能在几秒内提供许多方向。</p>
+    </div>
+    <div class="article-block">
+      <p class="article-text">The challenge is not only quality, but also <span class="vocab-highlight" data-word="disclosure" data-phonetic="/dɪsˈkloʊʒər/" data-meaning="披露；公开说明">disclosure</span>. If a song sounds human but was partly generated by software, award committees, fans, and streaming platforms may all want clearer information.</p>
+      <p class="chinese cn">挑战不仅在于质量，也在于透明披露。如果一首歌听起来像真人创作，但部分由软件生成，那么评奖委员会、歌迷和流媒体平台都可能希望获得更清晰的信息。</p>
+    </div>
+    <div class="article-block">
+      <p class="article-text">The Recording Academy&#x27;s current approach is not a simple ban on every AI-assisted track. Instead, the focus is whether meaningful human creativity is present in the submitted work.</p>
+      <p class="chinese cn">Recording Academy 目前的做法并不是简单禁止所有使用 AI 辅助的作品。它关注的是参评作品中是否存在有意义的人类创造力。</p>
+    </div>
+    <div class="article-block">
+      <p class="article-text">This creates difficult category questions. If AI performs a vocal part, that may affect a performance award. If a human singer delivers an AI-written song with skill and emotion, the judgment may be different.</p>
+      <p class="chinese cn">这会带来复杂的奖项类别问题。如果 AI 完成了演唱部分，可能会影响表演类奖项；如果真人歌手用技巧和情感演唱了一首 AI 写的歌，判断结果可能不同。</p>
+    </div>
+    <div class="article-block">
+      <p class="article-text">Streaming services are seeing a rapid rise in AI-generated tracks. This growth can make discovery harder, because listeners and platforms must separate serious creative work from mass-produced audio content.</p>
+      <p class="chinese cn">流媒体服务正在看到 AI 生成歌曲的快速增长。这种增长会让发现好音乐变得更难，因为听众和平台必须区分严肃创作和大规模生产的音频内容。</p>
+    </div>
+    <div class="article-block">
+      <p class="article-text">Mason&#x27;s argument points to a larger cultural tension. Technology can expand what artists can make, but music still matters because it reflects lived experience, emotion, collaboration, and human judgment.</p>
+      <p class="chinese cn">Mason 的观点指向一种更大的文化张力。技术可以扩展艺术家的创作能力，但音乐之所以重要，仍然是因为它反映了生活经验、情感、协作和人类判断。</p>
+    </div>
+    <div class="article-block">
+      <p class="article-text">The industry may eventually treat some AI tools like drum machines or autotune: controversial at first, then normal. But the rules around consent, training data, <span class="vocab-highlight" data-word="credit" data-phonetic="/ˈkredɪt/" data-meaning="署名；功劳；认可">credit</span>, and awards are still unsettled.</p>
+      <p class="chinese cn">行业最终可能会像看待鼓机或自动调音一样看待某些 AI 工具：一开始有争议，后来变得正常。但关于授权、训练数据、署名和奖项的规则仍未稳定。</p>
+    </div>
+    <div class="article-block">
+      <p class="article-text">For English learners, this topic is useful because it combines technology, law, art, and business. It also shows how one word, such as creativity, can carry both practical and emotional meaning.</p>
+      <p class="chinese cn">对英语学习者来说，这个话题很有价值，因为它结合了技术、法律、艺术和商业。它也展示了一个词，比如 creativity，如何同时承载实际意义和情感意义。</p>
+    </div>
+
+  </article>
+
+  <section class="mt-20 max-w-3xl">
+    <div class="section-divider"><span class="ornament">Core Vocabulary</span></div>
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <div class="smallcaps">Words to Master</div>
+        <div class="flex items-baseline gap-3 mt-2">
+          <span id="vocab-count" class="stat-num">12</span>
+          <span class="cn text-base" style="color:var(--ink-3)">个核心词汇</span>
+        </div>
+      </div>
+      <div class="meta-line hidden sm:block">点击文中高亮词查看释义 · Click highlighted words</div>
+    </div>
+    <div class="vocab-card p-8">
+      <div class="flex gap-3 mb-8">
+        <input id="new-word-input" type="text" placeholder="输入新单词 / Add a new word…" class="input-field cn" onkeydown="if(event.key==='Enter') addNewWord()">
+        <button onclick="addNewWord()" class="btn-primary cn"><i class="fa-solid fa-plus mr-1.5"></i> 添加到词汇表</button>
+      </div>
+      <div id="vocab-container"></div>
+    </div>
+  </section>
+
+  <footer class="article-footer max-w-3xl"><div class="red-rule"></div></footer>
+  </div>
+</div>
+</main>
+
+<button id="selection-vocab-popover" class="selection-vocab-popover" type="button">
+  <i class="fa-solid fa-plus text-xs"></i>
+  <span>加入词汇表</span>
+</button>
+
+<script>
+  let vocabularyData = [
+      {
+          "word": "generative",
+          "phonetic": "/ˈdʒenərətɪv/",
+          "meaning": "生成式的；能产生新内容的",
+          "example": "A generative tool can create a rough demo from a short text prompt.",
+          "exampleZh": "生成式工具可以根据一小段文字提示创作一个粗略的样带。",
+          "audio": "audio/ai-music-grammys-human-creativity-industry-rules/generative.mp3"
+      },
+      {
+          "word": "disclosure",
+          "phonetic": "/dɪsˈkloʊʒər/",
+          "meaning": "披露；公开说明",
+          "example": "The label asked for clear disclosure when AI was used in the track.",
+          "exampleZh": "唱片公司要求在歌曲使用 AI 时进行清晰披露。",
+          "audio": "audio/ai-music-grammys-human-creativity-industry-rules/disclosure.mp3"
+      },
+      {
+          "word": "eligibility",
+          "phonetic": "/ˌelɪdʒəˈbɪləti/",
+          "meaning": "资格；符合条件",
+          "example": "The committee reviewed the song's eligibility before accepting the entry.",
+          "exampleZh": "委员会在接受报名之前审查了这首歌的参赛资格。",
+          "audio": "audio/ai-music-grammys-human-creativity-industry-rules/eligibility.mp3"
+      },
+      {
+          "word": "threshold",
+          "phonetic": "/ˈθreʃhoʊld/",
+          "meaning": "门槛；临界点",
+          "example": "The award rules need a clear threshold for human contribution.",
+          "exampleZh": "奖项规则需要为人类贡献设定清晰门槛。",
+          "audio": "audio/ai-music-grammys-human-creativity-industry-rules/threshold.mp3"
+      },
+      {
+          "word": "stem",
+          "phonetic": "/stem/",
+          "meaning": "分轨音频；音乐工程中的单独音轨",
+          "example": "The producer replaced the drum stem with a live recording.",
+          "exampleZh": "制作人用现场录音替换了鼓的分轨。",
+          "audio": "audio/ai-music-grammys-human-creativity-industry-rules/stem.mp3"
+      },
+      {
+          "word": "backing vocal",
+          "phonetic": "/ˈbækɪŋ ˈvoʊkəl/",
+          "meaning": "伴唱；和声",
+          "example": "The chorus sounded fuller after the backing vocals were added.",
+          "exampleZh": "加入伴唱后，副歌听起来更饱满。",
+          "audio": "audio/ai-music-grammys-human-creativity-industry-rules/backing-vocal.mp3"
+      },
+      {
+          "word": "committee",
+          "phonetic": "/kəˈmɪti/",
+          "meaning": "委员会",
+          "example": "A committee may ask artists to explain how a song was made.",
+          "exampleZh": "委员会可能会要求艺术家解释一首歌是如何制作的。",
+          "audio": "audio/ai-music-grammys-human-creativity-industry-rules/committee.mp3"
+      },
+      {
+          "word": "synthetic",
+          "phonetic": "/sɪnˈθetɪk/",
+          "meaning": "合成的；人工生成的",
+          "example": "Some listeners could not tell whether the voice was synthetic.",
+          "exampleZh": "一些听众无法判断那个声音是否是合成的。",
+          "audio": "audio/ai-music-grammys-human-creativity-industry-rules/synthetic.mp3"
+      },
+      {
+          "word": "credit",
+          "phonetic": "/ˈkredɪt/",
+          "meaning": "署名；功劳；认可",
+          "example": "Musicians want fair credit for the ideas they bring to a session.",
+          "exampleZh": "音乐人希望自己在录音过程中贡献的想法得到公平署名。",
+          "audio": "audio/ai-music-grammys-human-creativity-industry-rules/credit.mp3"
+      },
+      {
+          "word": "guardrail",
+          "phonetic": "/ˈɡɑːrdreɪl/",
+          "meaning": "防护规则；限制措施",
+          "example": "The industry needs guardrails before AI tools become even more powerful.",
+          "exampleZh": "在 AI 工具变得更强大之前，行业需要防护规则。",
+          "audio": "audio/ai-music-grammys-human-creativity-industry-rules/guardrail.mp3"
+      },
+      {
+          "word": "omnipresent",
+          "phonetic": "/ˌɑːmnɪˈpreznt/",
+          "meaning": "无处不在的",
+          "example": "AI has become almost omnipresent in modern studio conversations.",
+          "exampleZh": "AI 几乎已经在现代录音室讨论中无处不在。",
+          "audio": "audio/ai-music-grammys-human-creativity-industry-rules/omnipresent.mp3"
+      },
+      {
+          "word": "paraphrase",
+          "phonetic": "/ˈpærəfreɪz/",
+          "meaning": "释义；改写",
+          "example": "Students should paraphrase the article instead of copying long passages.",
+          "exampleZh": "学生应该改写文章内容，而不是复制长段文字。",
+          "audio": "audio/ai-music-grammys-human-creativity-industry-rules/paraphrase.mp3"
+      }
+  ];
+
+  let activeAudio = null;
+  let activeAudioButton = null;
+  let activeAudioCleanup = null;
+  let activeSpokenWords = [];
+  let activeSpokenIndex = -1;
+  let pendingSelectionText = '';
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+  }
+
+  function resetActiveAudio() {
+    if (activeAudio) {
+      activeAudio.pause();
+      activeAudio.currentTime = 0;
+    }
+    clearSpokenWordUnderline();
+    if (activeAudioCleanup) {
+      activeAudioCleanup();
+    } else if (activeAudioButton) {
+      activeAudioButton.classList.remove('is-playing');
+      activeAudioButton.innerHTML = '<i class="fa-solid fa-play text-xs"></i><span>Play paragraph</span>';
+    }
+    activeAudio = null;
+    activeAudioButton = null;
+    activeAudioCleanup = null;
+  }
+
+  function clearSpokenWordUnderline() {
+    activeSpokenWords.forEach(word => word.classList.remove('is-speaking'));
+    activeSpokenWords = [];
+    activeSpokenIndex = -1;
+  }
+
+  function speak(item, button) {
+    if (!item || !item.audio) return;
+    resetActiveAudio();
+    const original = button ? button.innerHTML : '';
+    const audio = new Audio(item.audio);
+    activeAudio = audio;
+    activeAudioCleanup = () => {
+      if (button) button.innerHTML = original;
+    };
+    if (button) button.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xs"></i>';
+    audio.onended = audio.onerror = () => {
+      if (activeAudio === audio) {
+        if (activeAudioCleanup) activeAudioCleanup();
+        activeAudio = null;
+        activeAudioButton = null;
+        activeAudioCleanup = null;
+      }
+    };
+    audio.play().catch(() => {
+      if (activeAudio === audio) {
+        if (activeAudioCleanup) activeAudioCleanup();
+        activeAudio = null;
+        activeAudioButton = null;
+        activeAudioCleanup = null;
+      }
+    });
+  }
+
+  function prepareSpokenWords(paragraph) {
+    if (!paragraph.dataset.spokenPrepared) {
+      const walker = document.createTreeWalker(paragraph, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          return node.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+        }
+      });
+      const textNodes = [];
+      while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+      textNodes.forEach(node => {
+        const fragment = document.createDocumentFragment();
+        node.nodeValue.split(/(\s+)/).forEach(token => {
+          if (!token) return;
+          if (/\s+/.test(token)) {
+            fragment.appendChild(document.createTextNode(token));
+            return;
+          }
+          const span = document.createElement('span');
+          span.className = 'spoken-word';
+          span.textContent = token;
+          fragment.appendChild(span);
+        });
+        node.parentNode.replaceChild(fragment, node);
+      });
+      paragraph.dataset.spokenPrepared = 'true';
+      makeHighlightsClickable();
+    }
+    return [...paragraph.querySelectorAll('.spoken-word')];
+  }
+
+  function updateSpokenWordUnderline(audio) {
+    if (!activeSpokenWords.length || !Number.isFinite(audio.duration) || audio.duration <= 0) return;
+    const index = Math.min(activeSpokenWords.length - 1, Math.floor((audio.currentTime / audio.duration) * activeSpokenWords.length));
+    if (index === activeSpokenIndex) return;
+    if (activeSpokenWords[activeSpokenIndex]) activeSpokenWords[activeSpokenIndex].classList.remove('is-speaking');
+    activeSpokenWords[index].classList.add('is-speaking');
+    activeSpokenIndex = index;
+  }
+
+  function playParagraphAudio(src, playButton, paragraph, restart = false) {
+    if (activeAudio && activeAudio.dataset && activeAudio.dataset.src === src && !restart) {
+      if (activeAudio.paused) {
+        activeAudio.play();
+        playButton.classList.add('is-playing');
+        playButton.innerHTML = '<i class="fa-solid fa-pause text-xs"></i><span>Pause paragraph</span>';
+      } else {
+        activeAudio.pause();
+        playButton.classList.remove('is-playing');
+        playButton.innerHTML = '<i class="fa-solid fa-play text-xs"></i><span>Resume paragraph</span>';
+      }
+      return;
+    }
+
+    resetActiveAudio();
+    activeSpokenWords = prepareSpokenWords(paragraph);
+    const audio = new Audio(src);
+    audio.dataset.src = src;
+    activeAudio = audio;
+    activeAudioButton = playButton;
+    activeAudioCleanup = () => {
+      playButton.classList.remove('is-playing');
+      playButton.innerHTML = '<i class="fa-solid fa-play text-xs"></i><span>Play paragraph</span>';
+    };
+    playButton.classList.add('is-playing');
+    playButton.innerHTML = '<i class="fa-solid fa-pause text-xs"></i><span>Pause paragraph</span>';
+    audio.addEventListener('timeupdate', () => updateSpokenWordUnderline(audio));
+    audio.addEventListener('loadedmetadata', () => updateSpokenWordUnderline(audio));
+    audio.onended = audio.onerror = () => resetActiveAudio();
+    audio.play().catch(() => resetActiveAudio());
+  }
+
+  function addParagraphAudioControls() {
+    document.querySelectorAll('[data-news-panel]').forEach(panel => {
+      const slug = panel.dataset.audioSlug || panel.dataset.newsPanel || document.body.dataset.slug || 'ferrari-luce-jony-ive-ev';
+      panel.querySelectorAll('.article-block .article-text').forEach((paragraph, index) => {
+        if (paragraph.nextElementSibling && paragraph.nextElementSibling.classList.contains('paragraph-audio')) return;
+        const src = `audio/${slug}/paragraphs/paragraph-${String(index + 1).padStart(2, '0')}.mp3`;
+        const controls = document.createElement('div');
+        controls.className = 'paragraph-audio';
+
+        const playButton = document.createElement('button');
+        playButton.type = 'button';
+        playButton.className = 'paragraph-audio-btn';
+        playButton.innerHTML = '<i class="fa-solid fa-play text-xs"></i><span>Play paragraph</span>';
+        playButton.addEventListener('click', () => playParagraphAudio(src, playButton, paragraph));
+
+        const restartButton = document.createElement('button');
+        restartButton.type = 'button';
+        restartButton.className = 'paragraph-audio-restart';
+        restartButton.title = 'Restart paragraph audio';
+        restartButton.innerHTML = '<i class="fa-solid fa-rotate-left text-xs"></i>';
+        restartButton.addEventListener('click', () => playParagraphAudio(src, playButton, paragraph, true));
+
+        controls.append(playButton, restartButton);
+        paragraph.insertAdjacentElement('afterend', controls);
+      });
+    });
+  }
+
+  function deleteVocabulary(word) {
+    vocabularyData = vocabularyData.filter(item => item.word !== word);
+    renderVocabulary();
+    document.querySelectorAll('.vocab-highlight').forEach(span => {
+      if (span.dataset.word === word) {
+        const t = document.createTextNode(span.textContent);
+        span.parentNode.replaceChild(t, span);
+      }
+    });
+  }
+
+  function addNewWord() {
+    const input = document.getElementById('new-word-input');
+    const word = input.value.trim();
+    if (!word) return;
+    if (vocabularyData.some(i => i.word.toLowerCase() === word.toLowerCase())) {
+      input.style.borderColor = 'var(--economist-red)';
+      input.placeholder = '该单词已存在 / Already in list';
+      input.value = '';
+      setTimeout(() => { input.style.borderColor = ''; input.placeholder = '输入新单词 / Add a new word…'; }, 1800);
+      markVocabularyWord(word);
+      return;
+    }
+    vocabularyData.push(createVocabularyEntry(word));
+    renderVocabulary();
+    input.value = '';
+    highlightWordInArticle(word);
+    markVocabularyWord(word);
+  }
+
+  function createVocabularyEntry(word) {
+    return { word, phonetic: '/.../', meaning: '（请补充中文释义）', example: `Selected phrase: ${word}`, exampleZh: '（请补充例句中文翻译）', audio: '' };
+  }
+
+  function highlightWordInArticle(word) {
+    document.querySelectorAll('.article-text').forEach(p => {
+      const re = new RegExp(`\\b(${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})\\b`, 'gi');
+      p.innerHTML = p.innerHTML.replace(re, `<span class="vocab-highlight" data-word="${escapeHtml(word)}">$1</span>`);
+    });
+    makeHighlightsClickable();
+  }
+
+  function markVocabularyWord(word) {
+    requestAnimationFrame(() => {
+      const row = [...document.querySelectorAll('.vocab-row')].find(el => el.dataset.word.toLowerCase() === word.toLowerCase());
+      if (row) {
+        row.animate([
+          { backgroundColor: 'rgba(227, 18, 11, 0.16)' },
+          { backgroundColor: 'transparent' }
+        ], { duration: 1200, easing: 'ease-out' });
+      }
+    });
+  }
+
+  function getArticleSelection() {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return null;
+    const text = selection.toString().replace(/\s+/g, ' ').trim();
+    if (!text || text.length > 80) return null;
+
+    const range = selection.getRangeAt(0);
+    const container = range.commonAncestorContainer.nodeType === Node.TEXT_NODE
+      ? range.commonAncestorContainer.parentElement
+      : range.commonAncestorContainer;
+    if (!container || !container.closest('.article-text')) return null;
+
+    const rect = range.getBoundingClientRect();
+    if (!rect || rect.width === 0 || rect.height === 0) return null;
+    return { text, rect };
+  }
+
+  function hideSelectionPopover() {
+    const popover = document.getElementById('selection-vocab-popover');
+    if (!popover) return;
+    popover.classList.remove('is-visible');
+    pendingSelectionText = '';
+  }
+
+  function showSelectionPopover() {
+    const data = getArticleSelection();
+    const popover = document.getElementById('selection-vocab-popover');
+    if (!data || !popover) {
+      hideSelectionPopover();
+      return;
+    }
+    pendingSelectionText = data.text;
+    popover.style.top = `${window.scrollY + data.rect.top - 46}px`;
+    popover.style.left = `${window.scrollX + data.rect.left + (data.rect.width / 2)}px`;
+    popover.style.transform = 'translateX(-50%)';
+    popover.classList.add('is-visible');
+  }
+
+  function addSelectedTextToVocabulary() {
+    const word = pendingSelectionText.trim();
+    if (!word) return;
+    if (!vocabularyData.some(i => i.word.toLowerCase() === word.toLowerCase())) {
+      vocabularyData.push(createVocabularyEntry(word));
+      renderVocabulary();
+      highlightWordInArticle(word);
+    }
+    window.getSelection()?.removeAllRanges();
+    hideSelectionPopover();
+    markVocabularyWord(word);
+  }
+
+  function initializeNewsDirectory() {
+    const buttons = [...document.querySelectorAll('[data-news-target]')];
+    const panels = [...document.querySelectorAll('[data-news-panel]')];
+    if (!buttons.length || !panels.length) return;
+
+    function showNews(id) {
+      buttons.forEach(button => button.classList.toggle('active', button.dataset.newsTarget === id));
+      panels.forEach(panel => { panel.hidden = panel.dataset.newsPanel !== id; });
+      resetActiveAudio();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => showNews(button.dataset.newsTarget));
+    });
+    showNews(buttons.find(button => button.classList.contains('active'))?.dataset.newsTarget || buttons[0].dataset.newsTarget);
+  }
+
+  function showTranslation(word, element) {
+    const item = vocabularyData.find(v => v.word === word);
+    const fallback = element ? {
+      phonetic: element.dataset.phonetic || '',
+      meaning: element.dataset.meaning || ''
+    } : null;
+    if (!item && !fallback?.meaning) return;
+    const phonetic = item?.phonetic || fallback.phonetic;
+    const meaning = item?.meaning || fallback.meaning;
+
+    document.querySelectorAll('.translation-tooltip').forEach(t => t.remove());
+
+    const tip = document.createElement('div');
+    tip.className = 'translation-tooltip cn';
+    tip.innerHTML = `
+      <div class="tooltip-phonetic">${phonetic || ''}</div>
+      <div class="tooltip-meaning">${meaning}</div>
+    `;
+    document.body.appendChild(tip);
+
+    const r = element.getBoundingClientRect();
+    tip.style.top = (window.scrollY + r.top - tip.offsetHeight - 12) + 'px';
+    tip.style.left = (window.scrollX + r.left) + 'px';
+
+    setTimeout(() => {
+      tip.style.transition = 'opacity .25s ease';
+      tip.style.opacity = '0';
+      setTimeout(() => tip.remove(), 260);
+    }, 2400);
+  }
+
+  function renderVocabulary() {
+    const c = document.getElementById('vocab-container');
+    const count = document.getElementById('vocab-count');
+    if (!c) return;
+    c.innerHTML = '';
+    if (count) count.textContent = vocabularyData.length;
+
+    vocabularyData.forEach(item => {
+      const wordForJs = JSON.stringify(item.word).replace(/</g, '\\u003c');
+      const row = document.createElement('div');
+      row.className = 'vocab-row';
+      row.dataset.word = item.word;
+      row.innerHTML = `
+        <div>
+          <div class="vocab-word">${escapeHtml(item.word)}</div>
+          <div class="vocab-phonetic">${escapeHtml(item.phonetic)}</div>
+        </div>
+        <div class="vocab-meta">
+          <div class="vocab-meaning cn">${escapeHtml(item.meaning)}</div>
+          <div class="vocab-example">&ldquo;${escapeHtml(item.example)}&rdquo;</div>
+          <div class="vocab-example-zh cn">${escapeHtml(item.exampleZh || '')}</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="icon-btn" title="Edge TTS 朗读 / Listen" onclick='speak(vocabularyData.find(v => v.word === ${wordForJs}), this)'>
+            <i class="fa-solid fa-volume-high text-xs"></i>
+          </button>
+          <button class="icon-btn danger" title="删除 / Remove" onclick='deleteVocabulary(${wordForJs})'>
+            <i class="fa-solid fa-xmark text-xs"></i>
+          </button>
+        </div>
+      `;
+      c.appendChild(row);
+    });
+  }
+
+  function makeHighlightsClickable() {
+    document.querySelectorAll('.vocab-highlight').forEach(span => {
+      span.onclick = () => showTranslation(span.dataset.word, span);
+    });
+  }
+
+  function switchTheme(theme) {
+    document.body.classList.toggle('premium', theme === 'premium');
+    document.querySelectorAll('.theme-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.theme === theme);
+    });
+    try { localStorage.setItem('economist-theme', theme); } catch(e) {}
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    renderVocabulary();
+    makeHighlightsClickable();
+    addParagraphAudioControls();
+    initializeNewsDirectory();
+    document.getElementById('selection-vocab-popover')?.addEventListener('click', addSelectedTextToVocabulary);
+    document.addEventListener('selectionchange', () => setTimeout(showSelectionPopover, 0));
+    document.addEventListener('mousedown', event => {
+      if (!event.target.closest('#selection-vocab-popover')) hideSelectionPopover();
+    });
+    try {
+      const saved = localStorage.getItem('economist-theme');
+      if (saved) switchTheme(saved);
+    } catch(e) {}
+  });
+</script>
+</body>
+</html>
